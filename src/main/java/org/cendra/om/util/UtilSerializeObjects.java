@@ -11,7 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class SerializeObjects {
+public class UtilSerializeObjects {
 	
 	public String toJsonByGson(Object obj) {
 		Gson gson = new Gson();

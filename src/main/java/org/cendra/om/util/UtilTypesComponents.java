@@ -1,8 +1,8 @@
 package org.cendra.om.util;
 
-import org.cendra.om.model.classes.TypeComponent;
+import org.cendra.om.bo.clazz.model.TypeComponent;
 
-public class TypesComponents {
+public class UtilTypesComponents {
 	
 	
 	public static TypeComponent CLASS_COMPONENT = new TypeComponent("class");

@@ -1,4 +1,4 @@
-package org.cendra.om.model.classes;
+package org.cendra.om.bo.clazz.model;
 
 public class TypeComponent {
 

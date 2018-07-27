@@ -1,24 +1,25 @@
-package org.cendra.om.persist.dao;
+package org.cendra.om.persist.dao.impl.file;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cendra.om.util.SerializeObjects;
+import org.cendra.om.persist.dao.ObjectsListDAO;
+import org.cendra.om.util.UtilSerializeObjects;
 
 import com.google.gson.JsonObject;
 
-public class ListObjectsFileJsonDAO implements ListObjectsDAO {
+public class ImplObjectsListFileJsonDAO implements ObjectsListDAO {
 
 	private String path;
 	
-	private SerializeObjects serializeObjects;
+	private UtilSerializeObjects serializeObjects;
 
-	public ListObjectsFileJsonDAO(String path) {
+	public ImplObjectsListFileJsonDAO(String path) {
 		super();		
 		this.path = path;
 		
-		serializeObjects = new SerializeObjects();
+		serializeObjects = new UtilSerializeObjects();
 	}
 
 	// public JsonObject create() throws Exception {

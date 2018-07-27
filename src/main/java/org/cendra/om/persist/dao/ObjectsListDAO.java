@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
-public interface ListObjectsDAO {
+public interface ObjectsListDAO {
 
 	public List<JsonObject> list() throws Exception;
 

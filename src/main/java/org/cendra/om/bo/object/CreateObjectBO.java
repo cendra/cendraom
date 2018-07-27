@@ -1,20 +1,20 @@
-package org.cendra.om.bo.core;
+package org.cendra.om.bo.object;
 
 import java.util.UUID;
 
-import org.cendra.om.model.classes.TypeComponent;
-import org.cendra.om.persist.dao.CreateObjectDAO;
-import org.cendra.om.util.SerializeObjects;
+import org.cendra.om.bo.clazz.model.TypeComponent;
+import org.cendra.om.persist.dao.ObjectCreateDAO;
+import org.cendra.om.util.UtilSerializeObjects;
 
 import com.google.gson.JsonObject;
 
 public class CreateObjectBO {
 
-	private CreateObjectDAO createObjectDAO;
+	private ObjectCreateDAO createObjectDAO;
 
-	private SerializeObjects serializeObjects;
+	private UtilSerializeObjects serializeObjects;
 
-	public CreateObjectBO(CreateObjectDAO createObjectDAO, SerializeObjects serializeObjects) {
+	public CreateObjectBO(ObjectCreateDAO createObjectDAO, UtilSerializeObjects serializeObjects) {
 		super();
 		this.createObjectDAO = createObjectDAO;
 		this.serializeObjects = serializeObjects;
@@ -29,7 +29,7 @@ public class CreateObjectBO {
 		jsonObject.addProperty("virtual", true);
 		jsonObject.addProperty("typeComponent", typeComponent.getName());
 
-		return createObjectDAO.create(jsonObject, typeComponent);
+		return createObjectDAO.create(jsonObject);
 
 	}
 
@@ -49,7 +49,7 @@ public class CreateObjectBO {
 		jsonObject.addProperty("virtual", false);
 		jsonObject.addProperty("typeComponent", typeComponent.getName());
 
-		return createObjectDAO.create(jsonObject, typeComponent);
+		return createObjectDAO.create(jsonObject);
 
 	}
 

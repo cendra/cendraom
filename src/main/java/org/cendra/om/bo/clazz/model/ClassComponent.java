@@ -1,9 +1,9 @@
-package org.cendra.om.model.classes;
+package org.cendra.om.bo.clazz.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cendra.om.util.TypesVisibilityClass;
+import org.cendra.om.util.UtilTypesVisibilityClass;
 
 public class ClassComponent {
 
@@ -11,7 +11,7 @@ public class ClassComponent {
 	private Boolean virtual = false;
 
 	private String name;
-	private TypeVisibilityClass visibility = TypesVisibilityClass.PRIVATE;
+	private TypeVisibilityClass visibility = UtilTypesVisibilityClass.PRIVATE;
 	private Boolean finalClass = false;
 	private Boolean abstractClass = false;
 	private List<ClassComponent> extendsClass = new ArrayList<ClassComponent>();

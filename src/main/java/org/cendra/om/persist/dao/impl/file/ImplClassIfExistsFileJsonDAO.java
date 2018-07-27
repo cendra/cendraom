@@ -1,23 +1,24 @@
-package org.cendra.om.persist.dao.custom;
+package org.cendra.om.persist.dao.impl.file;
 
 import java.io.File;
 
-import org.cendra.om.util.SerializeObjects;
-import org.cendra.om.util.TypesComponents;
+import org.cendra.om.persist.dao.ClassIfExistsDAO;
+import org.cendra.om.util.UtilSerializeObjects;
+import org.cendra.om.util.UtilTypesComponents;
 
 import com.google.gson.JsonObject;
 
-public class IfExistsClassFileJsonDAO implements IfExistsClassDAO {
+public class ImplClassIfExistsFileJsonDAO implements ClassIfExistsDAO {
 
 	private String path;
 
-	private SerializeObjects serializeObjects;
+	private UtilSerializeObjects utilSerializeObjects;
 
-	public IfExistsClassFileJsonDAO(String path) {
+	public ImplClassIfExistsFileJsonDAO(String path, UtilSerializeObjects utilSerializeObjects) {
 		super();
 		this.path = path;
 
-		serializeObjects = new SerializeObjects();
+		this.utilSerializeObjects = utilSerializeObjects;
 	}
 
 	public boolean ifExistsClass(String name) throws Exception {
@@ -28,7 +29,7 @@ public class IfExistsClassFileJsonDAO implements IfExistsClassDAO {
 
 		for (File fileObject : filesObjects) {
 
-			JsonObject jsonObject = serializeObjects.buildJsonObjectByString(fileObject);
+			JsonObject jsonObject = utilSerializeObjects.buildJsonObjectByString(fileObject);
 
 			Boolean virtualItem = null;
 
@@ -45,7 +46,7 @@ public class IfExistsClassFileJsonDAO implements IfExistsClassDAO {
 
 			boolean isClassComponent = false;
 
-			if (typeComponentItem.equals(TypesComponents.CLASS_COMPONENT.getName())) {
+			if (typeComponentItem.equals(UtilTypesComponents.CLASS_COMPONENT.getName())) {
 				isClassComponent = true;
 			}
 

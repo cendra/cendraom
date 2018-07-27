@@ -1,11 +1,11 @@
-package org.cendra.om.bo.classess;
+package org.cendra.om.bo.clazz;
 
-import org.cendra.om.bo.core.CreateObjectBO;
-import org.cendra.om.model.classes.ClassComponent;
-import org.cendra.om.model.classes.persist.ClassComponentPersist;
-import org.cendra.om.util.SerializeObjects;
-import org.cendra.om.util.TypesComponents;
-import org.cendra.om.util.TypesVisibilityClass;
+import org.cendra.om.bo.clazz.model.ClassComponent;
+import org.cendra.om.bo.clazz.model.persist.ClassComponentPersist;
+import org.cendra.om.bo.object.CreateObjectBO;
+import org.cendra.om.util.UtilSerializeObjects;
+import org.cendra.om.util.UtilTypesComponents;
+import org.cendra.om.util.UtilTypesVisibilityClass;
 
 import com.google.gson.JsonObject;
 
@@ -13,22 +13,22 @@ public class CreateClassBO {
 
 	private CreateObjectBO createObjectBO;
 	private IfExistsClassBO ifExistsClassBO;
-	private SerializeObjects serializeObjects;
+	private UtilSerializeObjects utilSerializeObjects;
 
 	public CreateClassBO(CreateObjectBO createObjectBO, IfExistsClassBO ifExistsClassBO,
-			SerializeObjects serializeObjects) {
+			UtilSerializeObjects utilSerializeObjects) {
 		super();
 		this.createObjectBO = createObjectBO;
 		this.ifExistsClassBO = ifExistsClassBO;
-		this.serializeObjects = serializeObjects;
+		this.utilSerializeObjects = utilSerializeObjects;
 	}
 
 	public ClassComponent create() throws Exception {
 
 		ClassComponent classComponent = new ClassComponent();
 
-		JsonObject jsonObject = createObjectBO.create(TypesComponents.CLASS_COMPONENT);
-		classComponent.setId(jsonObject.get("id").toString());
+		JsonObject jsonObject = createObjectBO.create(UtilTypesComponents.CLASS_COMPONENT);
+		classComponent.setId(jsonObject.get("id").getAsString());
 		classComponent.setVirtual(jsonObject.get("virtual").getAsBoolean());
 
 		return classComponent;
@@ -74,16 +74,18 @@ public class CreateClassBO {
 		// String jsonString = gson.toJson(new ClassComponentPersist(classComponent));
 
 //		String jsonString = serializeObjects.toJsonByGson(new ClassComponentPersist(classComponent));
-		String jsonString = serializeObjects.toJsonByJackson(new ClassComponentPersist(classComponent));
+		String jsonString = utilSerializeObjects.toJsonByJackson(new ClassComponentPersist(classComponent));
 
-		JsonObject jsonObject = createObjectBO.create(jsonString, TypesComponents.CLASS_COMPONENT);
-		classComponent.setId(jsonObject.get("id").toString());
+		JsonObject jsonObject = createObjectBO.create(jsonString, UtilTypesComponents.CLASS_COMPONENT);
+		
+		classComponent.setId(jsonObject.get("id").getAsString());
 		classComponent.setVirtual(jsonObject.get("virtual").getAsBoolean());
 
 		return classComponent;
 	}
 
-	private void checkExtendsClass(ClassComponent classComponent, ClassComponent extendsClass) {
+	private void checkExtendsClass(ClassComponent classComponent, ClassComponent extendsClass) throws Exception {
+		
 		if (extendsClass == null) {
 			throw new IllegalArgumentException(classComponent.getName() + ". Se intento extender de una clase nula.");
 		}
@@ -115,14 +117,14 @@ public class CreateClassBO {
 					classComponent.getName() + ". Se intento extender de una clase con el atributo 'final' verdadero. "
 							+ extendsClass.getName());
 		}
-		if (extendsClass.getVisibility().equals(TypesVisibilityClass.PRIVATE)
+		if (extendsClass.getVisibility().equals(UtilTypesVisibilityClass.PRIVATE)
 				&& extendsClass.getPackagesName().equals(classComponent.getPackagesName()) == false) {
 			throw new IllegalArgumentException(classComponent.getName()
 					+ ". Se intento extender de una clase privada que no se encuentra en el mismo paquete. "
 					+ extendsClass.getName());
 		}
 
-		if (extendsClass.getVisibility().equals(TypesVisibilityClass.PUBLICDOWN)) {
+		if (extendsClass.getVisibility().equals(UtilTypesVisibilityClass.PUBLICDOWN)) {
 			String[] ePackages = extendsClass.getPackages();
 			String[] thisPackages = classComponent.getPackages();
 
@@ -148,6 +150,14 @@ public class CreateClassBO {
 				c++;
 			}
 		}
+		
+		
+		if (ifExistsClassBO.ifExistsClass(extendsClass) == false) {
+			throw new IllegalArgumentException(
+					"Se intento crear una clase que extiende de una clase que no existe. " + classComponent.getName() + " extends " + extendsClass.getName());
+		}
+		
+		
 	}
 
 	// private void cyclicalHeritageControl(ClassComponent classComponent,

@@ -1,9 +1,9 @@
-package org.cendra.om.model.classes.persist;
+package org.cendra.om.bo.clazz.model.persist;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cendra.om.model.classes.ClassComponent;
+import org.cendra.om.bo.clazz.model.ClassComponent;
 
 public class ClassComponentPersist {
 

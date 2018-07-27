@@ -1,15 +1,8 @@
 package org.cendra.om;
 
-import java.util.List;
-
-import org.cendra.om.bo.classess.CreateClassBO;
-import org.cendra.om.bo.core.CreateObjectBO;
-import org.cendra.om.bo.core.ListObjectsBO;
-import org.cendra.om.model.classes.ClassComponent;
-import org.cendra.om.util.TypesComponents;
-import org.cendra.om.util.TypesVisibilityClass;
-
-import com.google.gson.JsonObject;
+import org.cendra.om.bo.clazz.CreateClassBO;
+import org.cendra.om.bo.clazz.model.ClassComponent;
+import org.cendra.om.util.UtilTypesVisibilityClass;
 
 /**
  * Hello world!
@@ -17,9 +10,18 @@ import com.google.gson.JsonObject;
  */
 public class AppOM {
 
+	
+
 	public static void main(String[] args) throws Exception {
 
-		args = new String[] { "-PATH/home/dmansilla/dev/salidas/objects/" };
+		// String path = "/home/dmansilla/dev/salidas/objects/";
+		String path = "D:\\dev\\salidas_pruebas\\cendraom";
+		String pathJdbc = "D:\\dev\\source\\cendraom\\src\\main\\java\\jdbc.properties";
+
+		args = new String[] { ContextOM.ARG_NAME_SOURCE + ContextOM.SOURCE_PG, ContextOM.ARG_NAME_PATH + path,
+				ContextOM.ARG_NAME_PATH_JDBC + pathJdbc };
+
+		// -------------------------------------------------------------------------
 
 		// CreateObjectBO createObjectBO =
 		// ContextOM.getInstance(args).buildCreateObjectBO();
@@ -38,18 +40,22 @@ public class AppOM {
 		//
 		// System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxx");
 		//
-		// ListObjectsBO listObjectsBO = ContextOM.getInstance().buildListObjectsBO();
+		// ListObjectsBO listObjectsBO =
+		// ContextOM.getInstance().buildListObjectsBO();
 		//
 		// List<JsonObject> listJsonObjects = listObjectsBO.list();
 		//
 		// System.out.println(listJsonObjects);
 
-		CreateClassBO createClassComponentBO = ContextOM.getInstance(args).buildCreateClassComponentBO();
+		// -------------------------------------------------------------------------
+
+		CreateClassBO createClassComponentBO = ContextOM.getInstance(args)
+				.buildCreateClassComponentBO();
 
 		ClassComponent persona = new ClassComponent();
 		persona.setAbstractClass(true);
 		// persona.setFinalClass(true);
-		persona.setVisibility(TypesVisibilityClass.PUBLICDOWN);
+		persona.setVisibility(UtilTypesVisibilityClass.PUBLICDOWN);
 		persona.setName("org.cendra.persona.Persona");
 		persona = createClassComponentBO.create(persona);
 		System.out.println(persona);
@@ -68,7 +74,7 @@ public class AppOM {
 		// persona2.addExtendClass(persona);
 		persona2.setAbstractClass(true);
 		// persona2.setFinalClass(true);
-		persona2.setVisibility(TypesVisibilityClass.PUBLICDOWN);
+		persona2.setVisibility(UtilTypesVisibilityClass.PUBLICDOWN);
 		persona2 = createClassComponentBO.create(persona2);
 		System.out.println(persona2);
 

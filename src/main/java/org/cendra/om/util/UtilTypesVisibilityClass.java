@@ -1,8 +1,8 @@
 package org.cendra.om.util;
 
-import org.cendra.om.model.classes.TypeVisibilityClass;
+import org.cendra.om.bo.clazz.model.TypeVisibilityClass;
 
-public class TypesVisibilityClass {
+public class UtilTypesVisibilityClass {
 	
 	
 	public static TypeVisibilityClass PUBLIC = new TypeVisibilityClass("public");
