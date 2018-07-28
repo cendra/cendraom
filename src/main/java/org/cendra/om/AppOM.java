@@ -1,7 +1,7 @@
 package org.cendra.om;
 
 import org.cendra.om.bo.clazz.CreateClassBO;
-import org.cendra.om.bo.clazz.model.ClassComponent;
+import org.cendra.om.bo.clazz.model.Clazz;
 import org.cendra.om.util.UtilTypesVisibilityClass;
 
 /**
@@ -49,33 +49,38 @@ public class AppOM {
 
 		// -------------------------------------------------------------------------
 
-		CreateClassBO createClassComponentBO = ContextOM.getInstance(args)
+		CreateClassBO createClassBO = ContextOM.getInstance(args)
 				.buildCreateClassComponentBO();
 
-		ClassComponent persona = new ClassComponent();
+		Clazz persona = new Clazz();
 		persona.setAbstractClass(true);
 		// persona.setFinalClass(true);
 		persona.setVisibility(UtilTypesVisibilityClass.PUBLICDOWN);
 		persona.setName("org.cendra.persona.Persona");
-		persona = createClassComponentBO.create(persona);
+		persona.addAtt("nombre");		
+		persona = createClassBO.create(persona);
 		System.out.println(persona);
 
-		ClassComponent personaFisica = new ClassComponent();
+		Clazz personaFisica = new Clazz();
 		personaFisica.setName("org.cendra.persona.fisica.PersonaFisica");
+		personaFisica.addAtt("apellido");
+		personaFisica.addAtt("dni");
+		personaFisica.addAtt("edad");
 		personaFisica.addExtendClass(persona);
 		// personaFisica.addExtendClass(persona);
 		// personaFisica.addExtendClass(personaFisica);
-		personaFisica = createClassComponentBO.create(personaFisica);
+		personaFisica = createClassBO.create(personaFisica);
 		System.out.println(personaFisica);
 
-		ClassComponent persona2 = new ClassComponent();
+		Clazz persona2 = new Clazz();
 		persona2.setName("org.cendra.persona.fisica.PersonaB");
 		persona2.addExtendClass(personaFisica);
 		// persona2.addExtendClass(persona);
 		persona2.setAbstractClass(true);
 		// persona2.setFinalClass(true);
-		persona2.setVisibility(UtilTypesVisibilityClass.PUBLICDOWN);
-		persona2 = createClassComponentBO.create(persona2);
+		persona2.setVisibility(UtilTypesVisibilityClass.PUBLICDOWN);		
+		persona2.addAtt("legajo");				
+		persona2 = createClassBO.create(persona2);
 		System.out.println(persona2);
 
 	}

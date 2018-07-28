@@ -3,9 +3,10 @@ package org.cendra.om.bo.clazz.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.cendra.om.util.UtilDataTypes;
 import org.cendra.om.util.UtilTypesVisibilityClass;
 
-public class ClassComponent {
+public class Clazz {
 
 	private String id;
 	private Boolean virtual = false;
@@ -14,7 +15,8 @@ public class ClassComponent {
 	private TypeVisibilityClass visibility = UtilTypesVisibilityClass.PRIVATE;
 	private Boolean finalClass = false;
 	private Boolean abstractClass = false;
-	private List<ClassComponent> extendsClass = new ArrayList<ClassComponent>();
+	private List<Clazz> extendsClass = new ArrayList<Clazz>();
+	private List<ClazzAtt> atts = new ArrayList<ClazzAtt>();
 
 	public String getId() {
 		if (id != null) {
@@ -52,7 +54,8 @@ public class ClassComponent {
 
 		}
 
-		this.name = getPackagesName().toLowerCase() + "." + this.getSimpleName(this.name);
+		this.name = getPackagesName().toLowerCase() + "."
+				+ this.getSimpleName(this.name);
 	}
 
 	public String[] getPackages() {
@@ -144,27 +147,45 @@ public class ClassComponent {
 		this.abstractClass = abstractClass;
 	}
 
-	public List<ClassComponent> getExtendsClass() {
+	public List<Clazz> getExtendsClass() {
 
 		return extendsClass;
 	}
 
-	public void setExtendsClass(List<ClassComponent> extendsClass) {
+	public void setExtendsClass(List<Clazz> extendsClass) {
 
 		this.extendsClass = extendsClass;
 	}
 
-	public boolean addExtendClass(ClassComponent e) {
+	public boolean addExtendClass(Clazz e) {
 
 		return extendsClass.add(e);
 
 	}
+	
+	public boolean addAtt(String name) {
+		return addAtt(name, UtilDataTypes.buildString());
+	}
+	
+	public boolean addAtt(String name, Clazz dataType) {
+		ClazzAtt clazzAtt = new ClazzAtt();
+		clazzAtt.setName(name);
+		clazzAtt.setDataType(dataType);		
+		clazzAtt.setOrderAtt(atts.size() + 1);				
+		
+		return atts.add(clazzAtt);
+	}
 
-	@Override
-	public String toString() {
-		return "ClassComponent [id=" + id + ", virtual=" + virtual + ", name=" + name + ", visibility=" + visibility
-				+ ", finalClass=" + finalClass + ", abstractClass=" + abstractClass + ", extendsClass=" + extendsClass
-				+ "]";
+	public boolean addAtt(ClazzAtt e) {
+		return atts.add(e);
+	}
+
+	public List<ClazzAtt> getAtts() {
+		return atts;
+	}
+
+	public void setAtts(List<ClazzAtt> atts) {
+		this.atts = atts;
 	}
 
 }

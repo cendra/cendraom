@@ -1,7 +1,7 @@
 package org.cendra.om.bo.clazz;
 
-import org.cendra.om.bo.clazz.model.ClassComponent;
-import org.cendra.om.bo.clazz.model.persist.ClassComponentPersist;
+import org.cendra.om.bo.clazz.model.Clazz;
+import org.cendra.om.bo.clazz.model.persist.ClazzPersist;
 import org.cendra.om.bo.object.CreateObjectBO;
 import org.cendra.om.util.UtilSerializeObjects;
 import org.cendra.om.util.UtilTypesComponents;
@@ -23,9 +23,9 @@ public class CreateClassBO {
 		this.utilSerializeObjects = utilSerializeObjects;
 	}
 
-	public ClassComponent create() throws Exception {
+	public Clazz create() throws Exception {
 
-		ClassComponent classComponent = new ClassComponent();
+		Clazz classComponent = new Clazz();
 
 		JsonObject jsonObject = createObjectBO.create(UtilTypesComponents.CLASS_COMPONENT);
 		classComponent.setId(jsonObject.get("id").getAsString());
@@ -35,7 +35,7 @@ public class CreateClassBO {
 
 	}
 
-	public ClassComponent create(ClassComponent classComponent) throws Exception {
+	public Clazz create(Clazz classComponent) throws Exception {
 
 		if (classComponent == null) {
 			throw new IllegalArgumentException("Se intento crear una clase nula.");
@@ -66,15 +66,17 @@ public class CreateClassBO {
 							+ classComponent.getName() + "'");
 		}
 
-		for (ClassComponent e : classComponent.getExtendsClass()) {
+		for (Clazz e : classComponent.getExtendsClass()) {
 			checkExtendsClass(classComponent, e);
 		}
+		
+		666 controlar que el tipo de dato de cada atributo exista
 
 		// Gson gson = new Gson();
 		// String jsonString = gson.toJson(new ClassComponentPersist(classComponent));
 
 //		String jsonString = serializeObjects.toJsonByGson(new ClassComponentPersist(classComponent));
-		String jsonString = utilSerializeObjects.toJsonByJackson(new ClassComponentPersist(classComponent));
+		String jsonString = utilSerializeObjects.toJsonByJackson(new ClazzPersist(classComponent));
 
 		JsonObject jsonObject = createObjectBO.create(jsonString, UtilTypesComponents.CLASS_COMPONENT);
 		
@@ -84,7 +86,7 @@ public class CreateClassBO {
 		return classComponent;
 	}
 
-	private void checkExtendsClass(ClassComponent classComponent, ClassComponent extendsClass) throws Exception {
+	private void checkExtendsClass(Clazz classComponent, Clazz extendsClass) throws Exception {
 		
 		if (extendsClass == null) {
 			throw new IllegalArgumentException(classComponent.getName() + ". Se intento extender de una clase nula.");
@@ -140,7 +142,7 @@ public class CreateClassBO {
 
 		int c = 0;
 
-		for (ClassComponent item : classComponent.getExtendsClass()) {
+		for (Clazz item : classComponent.getExtendsClass()) {
 			if (item.getName().equals(extendsClass.getName())) {
 				if (c >= 1) {
 					throw new IllegalArgumentException(classComponent.getName()

@@ -16,6 +16,7 @@ import org.cendra.om.bo.clazz.IfExistsClassBO;
 import org.cendra.om.bo.object.CreateObjectBO;
 import org.cendra.om.bo.object.ListObjectsBO;
 import org.cendra.om.persist.dao.impl.dbrms.pg.ImplClassIfExistsPgDAO;
+import org.cendra.om.persist.dao.impl.dbrms.pg.ImplObjectCreatePgDAO;
 import org.cendra.om.persist.dao.impl.file.ImplClassIfExistsFileJsonDAO;
 import org.cendra.om.persist.dao.impl.file.ImplObjectCreateFileJsonDAO;
 import org.cendra.om.persist.dao.impl.file.ImplObjectsListFileJsonDAO;
@@ -122,8 +123,8 @@ public class ContextOM {
 						+ buildValue(properties.getProperty(obj.toString()))
 						+ ",";
 			}
-			
-			json = json.substring(0, json.length()-1);
+
+			json = json.substring(0, json.length() - 1);
 
 			json += "\n}";
 
@@ -212,11 +213,12 @@ public class ContextOM {
 	// ---------------------------------------------------------
 
 	public IfExistsClassBO buildIfExistsClassBO() {
-		
-		if(source == SOURCE_PG){
-			return new IfExistsClassBO(new ImplClassIfExistsPgDAO(dataSourceWrapper));
-		}		
-		
+
+		if (source == SOURCE_PG) {
+			return new IfExistsClassBO(new ImplClassIfExistsPgDAO(
+					dataSourceWrapper));
+		}
+
 		return new IfExistsClassBO(new ImplClassIfExistsFileJsonDAO(path,
 				new UtilSerializeObjects()));
 	}
@@ -229,6 +231,11 @@ public class ContextOM {
 	// ---------------------------------------------------------
 
 	public CreateObjectBO buildCreateObjectBO() {
+
+		if (source == SOURCE_PG) {
+			return new CreateObjectBO(new ImplObjectCreatePgDAO(
+					dataSourceWrapper), new UtilSerializeObjects());
+		}
 
 		return new CreateObjectBO(new ImplObjectCreateFileJsonDAO(path),
 				new UtilSerializeObjects());

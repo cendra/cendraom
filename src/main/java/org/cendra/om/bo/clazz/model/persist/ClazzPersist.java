@@ -3,9 +3,10 @@ package org.cendra.om.bo.clazz.model.persist;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cendra.om.bo.clazz.model.ClassComponent;
+import org.cendra.om.bo.clazz.model.Clazz;
+import org.cendra.om.bo.clazz.model.ClazzAtt;
 
-public class ClassComponentPersist {
+public class ClazzPersist {
 
 	private String id;
 	private Boolean virtual;
@@ -16,8 +17,9 @@ public class ClassComponentPersist {
 	private Boolean finalClass;
 	private Boolean abstractClass;
 	private List<String> extendsClass = new ArrayList<String>();
+	private List<ClazzAttPersist> atts = new ArrayList<ClazzAttPersist>();
 
-	public ClassComponentPersist(ClassComponent classComponent) {
+	public ClazzPersist(Clazz classComponent) {
 		id = classComponent.getId();
 		virtual = classComponent.getVirtual();
 		name = classComponent.getName();
@@ -27,8 +29,13 @@ public class ClassComponentPersist {
 		finalClass = classComponent.getFinalClass();
 		abstractClass = classComponent.getAbstractClass();
 		if (classComponent.getExtendsClass() != null) {
-			for (ClassComponent extendClass : classComponent.getExtendsClass()) {
+			for (Clazz extendClass : classComponent.getExtendsClass()) {
 				extendsClass.add(extendClass.getId());
+			}
+		}		
+		if (classComponent.getAtts() != null) {
+			for (ClazzAtt clazzAtt : classComponent.getAtts()) {
+				atts.add(new ClazzAttPersist(clazzAtt));
 			}
 		}
 	}
@@ -95,6 +102,14 @@ public class ClassComponentPersist {
 
 	public void setExtendsClass(List<String> extendsClass) {
 		this.extendsClass = extendsClass;
+	}
+
+	public List<ClazzAttPersist> getAtts() {
+		return atts;
+	}
+
+	public void setAtts(List<ClazzAttPersist> atts) {
+		this.atts = atts;
 	}
 
 }

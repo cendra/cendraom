@@ -193,6 +193,7 @@ public class ConnectionWrapper {
 	}
 
 	// ===================================================================================================
+	// ===================================================================================================
 
 	@SuppressWarnings("rawtypes")
 	public List findToListByCendraConvention(String sql)
@@ -238,11 +239,11 @@ public class ConnectionWrapper {
 
 		String msg = buildPrintSQLStart(sql);
 
-//		System.out.println("SQL 1 " + sql);
+		// System.out.println("SQL 1 " + sql);
 		ZonedDateTime startTime = ZonedDateTime.now();
 		ResultSet resultSet = preparedStatement.executeQuery();
-		ZonedDateTime endTime = ZonedDateTime.now();		
-//		System.out.println("SQL 2 " + sql);
+		ZonedDateTime endTime = ZonedDateTime.now();
+		// System.out.println("SQL 2 " + sql);
 		printSQLWarning(resultSet.getWarnings());
 
 		printSQLEnd(msg, Duration.between(startTime, endTime));
@@ -570,9 +571,14 @@ public class ConnectionWrapper {
 
 		if (isVerbose()) {
 
-			msgSql += "\n\n[OK] SQL ejecutando (Total query runtime: "
-					+ duration.toMillis() + " Millis )" + ZonedDateTime.now() + "\n\n"
-					+ Util.sep();
+			if (duration != null) {
+				msgSql += "\n\n[OK] SQL ejecutando (Total query runtime: "
+						+ duration.toMillis() + " Millis )"
+						+ ZonedDateTime.now() + "\n\n" + Util.sep();
+			} else {
+				msgSql += "\n\n[OK] SQL ejecutando " + ZonedDateTime.now()
+						+ "\n\n" + Util.sep();
+			}
 
 			System.out.println(msgSql);
 		}
@@ -765,6 +771,15 @@ public class ConnectionWrapper {
 				sql += ";";
 			}
 
+			String argsString = "";
+			for (int i = 0; i < args.length; i++) {
+				argsString += "[" + args[i] + "] ";
+			}
+			argsString = argsString.trim();
+			if (args.length > 0) {
+				sql += "\nargs = " + argsString;
+			}
+
 		} else {
 
 			if (sql.trim().endsWith(";") == false) {
@@ -790,14 +805,14 @@ public class ConnectionWrapper {
 			sql += ";";
 		}
 
-		// String argsString = "";
-		// for (int i = 0; i < args.length; i++) {
-		// argsString += "[" + args[i] + "] ";
-		// }
-		// argsString = argsString.trim();
-		// if (args.length > 0) {
-		// sql += "\nuuargs = " + argsString;
-		// }
+		String argsString = "";
+		for (int i = 0; i < args.length; i++) {
+			argsString += "[" + args[i] + "] ";
+		}
+		argsString = argsString.trim();
+		if (args.length > 0) {
+			sql += "\nuuargs = " + argsString;
+		}
 
 		return sql.trim();
 	}

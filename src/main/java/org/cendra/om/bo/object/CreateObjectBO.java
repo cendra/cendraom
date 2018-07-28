@@ -1,10 +1,9 @@
 package org.cendra.om.bo.object;
 
-import java.util.UUID;
-
 import org.cendra.om.bo.clazz.model.TypeComponent;
 import org.cendra.om.persist.dao.ObjectCreateDAO;
 import org.cendra.om.util.UtilSerializeObjects;
+import org.cendra.om.util.UtilUUID;
 
 import com.google.gson.JsonObject;
 
@@ -22,7 +21,7 @@ public class CreateObjectBO {
 
 	public JsonObject create(TypeComponent typeComponent) throws Exception {
 
-		String id = buildUUID();
+		String id = UtilUUID.buildUUID();
 
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty("id", id);
@@ -43,7 +42,7 @@ public class CreateObjectBO {
 
 	public JsonObject create(JsonObject jsonObject, TypeComponent typeComponent) throws Exception {
 
-		String id = buildUUID();
+		String id = UtilUUID.buildUUID();
 
 		jsonObject.addProperty("id", id);
 		jsonObject.addProperty("virtual", false);
@@ -53,7 +52,5 @@ public class CreateObjectBO {
 
 	}
 
-	private String buildUUID() {
-		return UUID.randomUUID().toString();
-	}
+	
 }
