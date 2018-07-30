@@ -42,7 +42,7 @@ public class CreateClassBO {
 
 	public Clazz create(Clazz clazz) throws Exception {
 
-		checkClass(clazz, "");
+		checkClass("Create Class", clazz, "");
 
 		if (ifExistsClassBO.ifExistsClass(clazz)) {
 			throw new IllegalArgumentException(
@@ -70,53 +70,53 @@ public class CreateClassBO {
 		return clazz;
 	}
 
-	private boolean checkClass(Clazz clazz, String msg) throws Exception {
+	private boolean checkClass(String operation, Clazz clazz, String msg) throws Exception {
 
 		if (clazz == null) {
-			throw new IllegalArgumentException("Clase nula. " + msg);
+			throw new IllegalArgumentException(operation + ". Clase nula. " + msg);
 		}
 		if (clazz.getName() == null) {
-			throw new IllegalArgumentException("Clase con un nombre nulo. "
+			throw new IllegalArgumentException(operation + ". Clase con un nombre nulo. "
 					+ msg);
 		}
 		if (clazz.getName().trim().length() == 0) {
-			throw new IllegalArgumentException("Clase con un nombre vacio. "
+			throw new IllegalArgumentException(operation + ". Clase con un nombre vacio. "
 					+ msg);
 		}
 		String regex = "^[a-zA-Z'.]{1,100}$";
 		if (clazz.getName().matches(regex) == false) {
-			throw new IllegalArgumentException("Clase con nombre incorrecto, '"
+			throw new IllegalArgumentException(operation + ". Clase con nombre incorrecto, '"
 					+ clazz.getName()
 					+ "', se espera un nombre con la forma \"" + regex + "\". "
 					+ msg);
 		}
 		if (Character.isUpperCase(clazz.getSimpleName().charAt(0)) == false) {
-			throw new IllegalArgumentException("Clase con nombre incorrecto, '"
+			throw new IllegalArgumentException(operation + ". Clase con nombre incorrecto, '"
 					+ clazz.getName() + "', se espera que sea CamelCase. "
 					+ msg);
 		}
 
 		for (Clazz e : clazz.getExtendsClass()) {
-			checkExtendsClass(clazz, e);
+			checkExtendsClass(operation, clazz, e);
 		}
 
 		for (ClazzAtt e : clazz.getAtts()) {
-			checkClassAtt(clazz, e);
+			checkClassAtt(operation, clazz, e);
 		}
 
 		return true;
 	}
 
-	private void checkExtendsClass(Clazz clazz, Clazz extendsClazz)
+	private void checkExtendsClass(String operation, Clazz clazz, Clazz extendsClazz)
 			throws Exception {
 
 		String msg = clazz.getName() + " extends " + extendsClazz.getName();
 
-		checkClass(extendsClazz, msg);
+		checkClass(operation, extendsClazz, msg);
 
 		if (clazz.getName().equals(extendsClazz.getName())) {
 			throw new IllegalArgumentException(
-					"Se intento extender una clase asi misma. " + msg);
+					operation + ". Se intento extender una clase asi misma. " + msg);
 		}
 
 		int c = 0;
@@ -125,7 +125,7 @@ public class CreateClassBO {
 			if (item.getName().equals(extendsClazz.getName())) {
 				if (c >= 1) {
 					throw new IllegalArgumentException(
-							"Se intento extender de una clase al que ya se está extendiendo. "
+							operation + ". Se intento extender de una clase al que ya se está extendiendo. "
 									+ msg);
 				}
 				c++;
@@ -140,55 +140,55 @@ public class CreateClassBO {
 
 		// cyclicalHeritageControl(classComponent, extendsClass);
 
-		checkUsableClass(extendsClazz, msg);
+		checkUsableClass(operation, extendsClazz, msg);
 
 	}
 
-	private void checkClassAtt(Clazz clazz, ClazzAtt clazzAtt) throws Exception {
+	private void checkClassAtt(String operation, Clazz clazz, ClazzAtt clazzAtt) throws Exception {
 
 		String msg = clazz.getName() + ".";
 
 		if (clazzAtt == null) {
-			throw new IllegalArgumentException("Atributo nulo. " + msg);
+			throw new IllegalArgumentException(operation + ". Atributo nulo. " + msg);
 		}
 
 		msg += clazzAtt.getName();
 
 		if (clazzAtt.getName() == null) {
-			throw new IllegalArgumentException("Atributo con un nombre nulo. "
+			throw new IllegalArgumentException(operation + ". Atributo con un nombre nulo. "
 					+ msg);
 		}
 		if (clazzAtt.getName().trim().length() == 0) {
-			throw new IllegalArgumentException("Atributo con un nombre vacio. "
+			throw new IllegalArgumentException(operation + ". Atributo con un nombre vacio. "
 					+ msg);
 		}
 		String regex = "^[a-zA-Z'.]{1,100}$";
 		if (clazzAtt.getName().matches(regex) == false) {
 			throw new IllegalArgumentException(
-					"Atributo con nombre incorrecto, '" + clazzAtt.getName()
+					operation + ". Atributo con nombre incorrecto, '" + clazzAtt.getName()
 							+ "', se espera un nombre con la forma \"" + regex
 							+ "\". " + msg);
 		}
 		if (Character.isLowerCase(clazzAtt.getName().charAt(0)) == false) {
 			throw new IllegalArgumentException(
-					"Atributo con nombre incorrecto, '" + clazzAtt.getName()
+					operation + ". Atributo con nombre incorrecto, '" + clazzAtt.getName()
 							+ "', se espera que sea CamelCase. " + msg);
 		}
 		if (clazzAtt.getOrderAtt() == null) {
-			throw new IllegalArgumentException("Atributo con un orden nulo. "
+			throw new IllegalArgumentException(operation + ". Atributo con un orden nulo. "
 					+ msg);
 		}
 		if (clazzAtt.getTypeCardinality() == null) {
 			throw new IllegalArgumentException(
-					"Atributo con cardinalidad nula. " + msg);
+					operation + ". Atributo con cardinalidad nula. " + msg);
 		}
 		if (clazzAtt.getTypeCardinality().getName() == null) {
 			throw new IllegalArgumentException(
-					"Atributo con nombre de cardinalidad nula. " + msg);
+					operation + ". Atributo con nombre de cardinalidad nula. " + msg);
 		}
 		if (clazzAtt.getTypeCardinality().getName().trim().length() == 0) {
 			throw new IllegalArgumentException(
-					"Atributo con nombre de cardinalidad vacia. " + msg);
+					operation + ". Atributo con nombre de cardinalidad vacia. " + msg);
 		}
 		boolean b = false;
 		for (TypeCardinality item : UtilDataTypes.CARDINALITIES) {
@@ -199,7 +199,7 @@ public class CreateClassBO {
 		}
 		if (b == false) {
 			throw new IllegalArgumentException(
-					"Atributo con nombre de cardinalidad que no existe, '"
+					operation + ". Atributo con nombre de cardinalidad que no existe, '"
 							+ clazzAtt.getTypeCardinality().getName() + "'. "
 							+ msg);
 		}
@@ -212,22 +212,22 @@ public class CreateClassBO {
 
 		msg += " ( dataType: " + dataTypeName + " )";
 
-		checkClass(clazzAtt.getDataType(), msg);
+		checkClass(operation, clazzAtt.getDataType(), msg);
 
-		checkUsableClass(clazzAtt.getDataType(), msg);
+		checkUsableClass(operation, clazzAtt.getDataType(), msg);
 
 	}
 
-	private boolean checkUsableClass(Clazz clazz, String msg) throws Exception {
+	private boolean checkUsableClass(String operation, Clazz clazz, String msg) throws Exception {
 
 		if (clazz.getVirtual() == null) {
 			throw new IllegalArgumentException(
-					". Se intento utilizar de una clase con el atributo 'virtual' nulo, "
+					operation + ". Se intento utilizar de una clase con el atributo 'virtual' nulo, "
 							+ clazz.getName() + ". " + msg);
 		}
 		if (clazz.getVirtual() == true) {
 			throw new IllegalArgumentException(
-					"Se intento utilizar de una clase con el atributo 'virtual' verdadero,  "
+					operation + ". Se intento utilizar de una clase con el atributo 'virtual' verdadero,  "
 							+ clazz.getName() + ". " + msg);
 		}
 
@@ -235,7 +235,7 @@ public class CreateClassBO {
 				&& clazz.getPackagesName().equals(clazz.getPackagesName()) == false) {
 
 			throw new IllegalArgumentException(
-					"Se intento utilizar de una clase privada que no se encuentra en el mismo paquete, "
+					operation + ". Se intento utilizar de una clase privada que no se encuentra en el mismo paquete, "
 							+ clazz.getName() + ". " + msg);
 		}
 
@@ -249,7 +249,7 @@ public class CreateClassBO {
 				if (ePackages[i].equals(thisPackages[i]) == false) {
 
 					throw new IllegalArgumentException(
-							"Se intento utilizar una clase 'pública descendente' que no se encuentra en la misma ruta de paquete, "
+							operation + ". Se intento utilizar una clase 'pública descendente' que no se encuentra en la misma ruta de paquete, "
 									+ clazz.getName() + ". " + msg);
 				}
 			}
@@ -257,7 +257,7 @@ public class CreateClassBO {
 		}
 
 		if (ifExistsClassBO.ifExistsClass(clazz) == false) {
-			throw new IllegalArgumentException("La clase no existe '"
+			throw new IllegalArgumentException(operation + ". La clase no existe '"
 					+ clazz.getName() + "'. " + msg);
 		}
 
