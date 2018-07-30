@@ -162,17 +162,17 @@ public class Clazz {
 		return extendsClass.add(e);
 
 	}
-	
+
 	public boolean addAtt(String name) {
 		return addAtt(name, UtilDataTypes.buildString());
 	}
-	
+
 	public boolean addAtt(String name, Clazz dataType) {
 		ClazzAtt clazzAtt = new ClazzAtt();
 		clazzAtt.setName(name);
-		clazzAtt.setDataType(dataType);		
-		clazzAtt.setOrderAtt(atts.size() + 1);				
-		
+		clazzAtt.setDataType(dataType);
+		clazzAtt.setOrderAtt(atts.size() + 1);
+
 		return atts.add(clazzAtt);
 	}
 
@@ -186,6 +186,48 @@ public class Clazz {
 
 	public void setAtts(List<ClazzAtt> atts) {
 		this.atts = atts;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		if(this.getId() != null){
+			result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		} else if(this.getName() != null){
+			result = prime * result + ((getName() == null) ? 0 : getName().hashCode());	
+		}
+		
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+
+		Clazz other = (Clazz) obj;
+
+		if (this.getName() == null) {
+			if (other.getName() != null)
+				return false;
+		} else if (!this.getName().equals(other.getName())) {
+			return false;
+		}
+		
+		if (this.getId() == null) {
+			if (other.getId() != null)
+				return false;
+		} else if (!this.getId().equals(other.getId())) {
+			return false;
+		} 
+
+		return true;
 	}
 
 }
