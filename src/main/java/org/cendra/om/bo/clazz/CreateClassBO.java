@@ -1,8 +1,11 @@
 package org.cendra.om.bo.clazz;
 
 import org.cendra.om.bo.clazz.model.Clazz;
+import org.cendra.om.bo.clazz.model.ClazzAtt;
+import org.cendra.om.bo.clazz.model.TypeCardinality;
 import org.cendra.om.bo.clazz.model.persist.ClazzPersist;
 import org.cendra.om.bo.object.CreateObjectBO;
+import org.cendra.om.util.UtilDataTypes;
 import org.cendra.om.util.UtilSerializeObjects;
 import org.cendra.om.util.UtilTypesComponents;
 import org.cendra.om.util.UtilTypesVisibilityClass;
@@ -38,12 +41,13 @@ public class CreateClassBO {
 	}
 
 	public Clazz create(Clazz clazz) throws Exception {
-		
+
 		checkClass(clazz, "");
-		
+
 		if (ifExistsClassBO.ifExistsClass(clazz)) {
-			throw new IllegalArgumentException("La clase ya existe '"
-					+ clazz.getName() + "'. ");
+			throw new IllegalArgumentException(
+					"Se intento crear una clase que ya existe '"
+							+ clazz.getName() + "'. ");
 		}
 
 		// ------------------------------------------------------------------------------------
@@ -72,24 +76,32 @@ public class CreateClassBO {
 			throw new IllegalArgumentException("Clase nula. " + msg);
 		}
 		if (clazz.getName() == null) {
-			throw new IllegalArgumentException("Clase con un nombre nulo. " + msg);
+			throw new IllegalArgumentException("Clase con un nombre nulo. "
+					+ msg);
 		}
 		if (clazz.getName().trim().length() == 0) {
-			throw new IllegalArgumentException("Clase con un nombre vacio. " + msg);
+			throw new IllegalArgumentException("Clase con un nombre vacio. "
+					+ msg);
 		}
 		String regex = "^[a-zA-Z'.]{1,100}$";
 		if (clazz.getName().matches(regex) == false) {
 			throw new IllegalArgumentException("Clase con nombre incorrecto, '"
 					+ clazz.getName()
-					+ "', se espera un nombre con la forma \"" + regex + "\". " + msg);
+					+ "', se espera un nombre con la forma \"" + regex + "\". "
+					+ msg);
 		}
 		if (Character.isUpperCase(clazz.getSimpleName().charAt(0)) == false) {
 			throw new IllegalArgumentException("Clase con nombre incorrecto, '"
-					+ clazz.getName() + "', se espera que sea CamelCase. " + msg);
-		}		
+					+ clazz.getName() + "', se espera que sea CamelCase. "
+					+ msg);
+		}
 
 		for (Clazz e : clazz.getExtendsClass()) {
 			checkExtendsClass(clazz, e);
+		}
+
+		for (ClazzAtt e : clazz.getAtts()) {
+			checkClassAtt(clazz, e);
 		}
 
 		return true;
@@ -99,8 +111,8 @@ public class CreateClassBO {
 			throws Exception {
 
 		String msg = clazz.getName() + " extends " + extendsClazz.getName();
-		
-		checkClass(extendsClazz, msg);		
+
+		checkClass(extendsClazz, msg);
 
 		if (clazz.getName().equals(extendsClazz.getName())) {
 			throw new IllegalArgumentException(
@@ -129,6 +141,80 @@ public class CreateClassBO {
 		// cyclicalHeritageControl(classComponent, extendsClass);
 
 		checkUsableClass(extendsClazz, msg);
+
+	}
+
+	private void checkClassAtt(Clazz clazz, ClazzAtt clazzAtt) throws Exception {
+
+		String msg = clazz.getName() + ".";
+
+		if (clazzAtt == null) {
+			throw new IllegalArgumentException("Atributo nulo. " + msg);
+		}
+
+		msg += clazzAtt.getName();
+
+		if (clazzAtt.getName() == null) {
+			throw new IllegalArgumentException("Atributo con un nombre nulo. "
+					+ msg);
+		}
+		if (clazzAtt.getName().trim().length() == 0) {
+			throw new IllegalArgumentException("Atributo con un nombre vacio. "
+					+ msg);
+		}
+		String regex = "^[a-zA-Z'.]{1,100}$";
+		if (clazzAtt.getName().matches(regex) == false) {
+			throw new IllegalArgumentException(
+					"Atributo con nombre incorrecto, '" + clazzAtt.getName()
+							+ "', se espera un nombre con la forma \"" + regex
+							+ "\". " + msg);
+		}
+		if (Character.isLowerCase(clazzAtt.getName().charAt(0)) == false) {
+			throw new IllegalArgumentException(
+					"Atributo con nombre incorrecto, '" + clazzAtt.getName()
+							+ "', se espera que sea CamelCase. " + msg);
+		}
+		if (clazzAtt.getOrderAtt() == null) {
+			throw new IllegalArgumentException("Atributo con un orden nulo. "
+					+ msg);
+		}
+		if (clazzAtt.getTypeCardinality() == null) {
+			throw new IllegalArgumentException(
+					"Atributo con cardinalidad nula. " + msg);
+		}
+		if (clazzAtt.getTypeCardinality().getName() == null) {
+			throw new IllegalArgumentException(
+					"Atributo con nombre de cardinalidad nula. " + msg);
+		}
+		if (clazzAtt.getTypeCardinality().getName().trim().length() == 0) {
+			throw new IllegalArgumentException(
+					"Atributo con nombre de cardinalidad vacia. " + msg);
+		}
+		boolean b = false;
+		for (TypeCardinality item : UtilDataTypes.CARDINALITIES) {
+			if (item.equals(clazzAtt.getTypeCardinality())) {
+				b = true;
+				break;
+			}
+		}
+		if (b == false) {
+			throw new IllegalArgumentException(
+					"Atributo con nombre de cardinalidad que no existe, '"
+							+ clazzAtt.getTypeCardinality().getName() + "'. "
+							+ msg);
+		}
+
+		String dataTypeName = null;
+
+		if (clazzAtt != null && clazzAtt.getDataType() != null) {
+			dataTypeName = clazzAtt.getDataType().getName();
+		}
+
+		msg += " ( dataType: " + dataTypeName + " )";
+
+		checkClass(clazzAtt.getDataType(), msg);
+
+		checkUsableClass(clazzAtt.getDataType(), msg);
 
 	}
 
@@ -169,7 +255,7 @@ public class CreateClassBO {
 			}
 
 		}
-		
+
 		if (ifExistsClassBO.ifExistsClass(clazz) == false) {
 			throw new IllegalArgumentException("La clase no existe '"
 					+ clazz.getName() + "'. " + msg);
