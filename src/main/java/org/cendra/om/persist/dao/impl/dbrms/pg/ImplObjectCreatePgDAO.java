@@ -139,7 +139,7 @@ public class ImplObjectCreatePgDAO extends GenericDAO implements
 			}
 
 			for (JsonObject att : atts) {
-				System.out.println(att);
+				
 
 				String nameAtt = att.get(UtilAtts.name).getAsString();
 				String dataType = att.get(UtilAtts.dataType).getAsString();

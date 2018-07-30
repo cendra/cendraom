@@ -7,11 +7,13 @@ public class UtilDataTypes {
 
 	private static String packageName = "org.cendra.om.model.datatype.";
 
-	public static TypeCardinality CARDINALITY_1_1 = new TypeCardinality("1-1");
-	public static TypeCardinality CARDINALITY_1_N = new TypeCardinality("1-N");
-	public static TypeCardinality CARDINALITY_NN = new TypeCardinality("N-N");
-	public static TypeCardinality[] CARDINALITIES = { CARDINALITY_1_1,
+	public static final TypeCardinality CARDINALITY_1_1 = new TypeCardinality("1-1");
+	public static final TypeCardinality CARDINALITY_1_N = new TypeCardinality("1-N");
+	public static final TypeCardinality CARDINALITY_NN = new TypeCardinality("N-N");
+	public static final TypeCardinality[] CARDINALITIES = { CARDINALITY_1_1,
 			CARDINALITY_1_N, CARDINALITY_NN };
+	
+	public static final Clazz[] PRIMITIVES_TYPES = { buildString() };
 
 	public static Clazz buildString() {
 
@@ -27,6 +29,26 @@ public class UtilDataTypes {
 		clazz.setName(clazz.getId());
 
 		return clazz;
+	}
+	
+	public static boolean isPrimitiveType(Clazz clazz){
+		for(Clazz primitiveType : PRIMITIVES_TYPES){
+			if(clazz.equals(primitiveType)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public static boolean ifExistsTypeCardinality(TypeCardinality typeCardinality){
+		for (TypeCardinality item : UtilDataTypes.CARDINALITIES) {
+			if (item.equals(typeCardinality)) {				
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 }

@@ -2,7 +2,6 @@ package org.cendra.om.bo.clazz;
 
 import org.cendra.om.bo.clazz.model.Clazz;
 import org.cendra.om.bo.clazz.model.ClazzAtt;
-import org.cendra.om.bo.clazz.model.TypeCardinality;
 import org.cendra.om.bo.clazz.model.persist.ClazzPersist;
 import org.cendra.om.bo.object.CreateObjectBO;
 import org.cendra.om.util.UtilDataTypes;
@@ -70,30 +69,32 @@ public class CreateClassBO {
 		return clazz;
 	}
 
-	private boolean checkClass(String operation, Clazz clazz, String msg) throws Exception {
+	private boolean checkClass(String operation, Clazz clazz, String msg)
+			throws Exception {
 
 		if (clazz == null) {
-			throw new IllegalArgumentException(operation + ". Clase nula. " + msg);
+			throw new IllegalArgumentException(operation + ". Clase nula. "
+					+ msg);
 		}
 		if (clazz.getName() == null) {
-			throw new IllegalArgumentException(operation + ". Clase con un nombre nulo. "
-					+ msg);
+			throw new IllegalArgumentException(operation
+					+ ". Clase con un nombre nulo. " + msg);
 		}
 		if (clazz.getName().trim().length() == 0) {
-			throw new IllegalArgumentException(operation + ". Clase con un nombre vacio. "
-					+ msg);
+			throw new IllegalArgumentException(operation
+					+ ". Clase con un nombre vacio. " + msg);
 		}
 		String regex = "^[a-zA-Z'.]{1,100}$";
 		if (clazz.getName().matches(regex) == false) {
-			throw new IllegalArgumentException(operation + ". Clase con nombre incorrecto, '"
-					+ clazz.getName()
+			throw new IllegalArgumentException(operation
+					+ ". Clase con nombre incorrecto, '" + clazz.getName()
 					+ "', se espera un nombre con la forma \"" + regex + "\". "
 					+ msg);
 		}
 		if (Character.isUpperCase(clazz.getSimpleName().charAt(0)) == false) {
-			throw new IllegalArgumentException(operation + ". Clase con nombre incorrecto, '"
-					+ clazz.getName() + "', se espera que sea CamelCase. "
-					+ msg);
+			throw new IllegalArgumentException(operation
+					+ ". Clase con nombre incorrecto, '" + clazz.getName()
+					+ "', se espera que sea CamelCase. " + msg);
 		}
 
 		for (Clazz e : clazz.getExtendsClass()) {
@@ -107,16 +108,16 @@ public class CreateClassBO {
 		return true;
 	}
 
-	private void checkExtendsClass(String operation, Clazz clazz, Clazz extendsClazz)
-			throws Exception {
+	private void checkExtendsClass(String operation, Clazz clazz,
+			Clazz extendsClazz) throws Exception {
 
 		String msg = clazz.getName() + " extends " + extendsClazz.getName();
 
 		checkClass(operation, extendsClazz, msg);
 
 		if (clazz.getName().equals(extendsClazz.getName())) {
-			throw new IllegalArgumentException(
-					operation + ". Se intento extender una clase asi misma. " + msg);
+			throw new IllegalArgumentException(operation
+					+ ". Se intento extender una clase asi misma. " + msg);
 		}
 
 		int c = 0;
@@ -125,7 +126,8 @@ public class CreateClassBO {
 			if (item.getName().equals(extendsClazz.getName())) {
 				if (c >= 1) {
 					throw new IllegalArgumentException(
-							operation + ". Se intento extender de una clase al que ya se está extendiendo. "
+							operation
+									+ ". Se intento extender de una clase al que ya se está extendiendo. "
 									+ msg);
 				}
 				c++;
@@ -144,64 +146,61 @@ public class CreateClassBO {
 
 	}
 
-	private void checkClassAtt(String operation, Clazz clazz, ClazzAtt clazzAtt) throws Exception {
+	private void checkClassAtt(String operation, Clazz clazz, ClazzAtt clazzAtt)
+			throws Exception {
 
 		String msg = clazz.getName() + ".";
 
 		if (clazzAtt == null) {
-			throw new IllegalArgumentException(operation + ". Atributo nulo. " + msg);
+			throw new IllegalArgumentException(operation + ". Atributo nulo. "
+					+ msg);
 		}
 
 		msg += clazzAtt.getName();
 
 		if (clazzAtt.getName() == null) {
-			throw new IllegalArgumentException(operation + ". Atributo con un nombre nulo. "
-					+ msg);
+			throw new IllegalArgumentException(operation
+					+ ". Atributo con un nombre nulo. " + msg);
 		}
 		if (clazzAtt.getName().trim().length() == 0) {
-			throw new IllegalArgumentException(operation + ". Atributo con un nombre vacio. "
-					+ msg);
+			throw new IllegalArgumentException(operation
+					+ ". Atributo con un nombre vacio. " + msg);
 		}
 		String regex = "^[a-zA-Z'.]{1,100}$";
 		if (clazzAtt.getName().matches(regex) == false) {
-			throw new IllegalArgumentException(
-					operation + ". Atributo con nombre incorrecto, '" + clazzAtt.getName()
-							+ "', se espera un nombre con la forma \"" + regex
-							+ "\". " + msg);
-		}
-		if (Character.isLowerCase(clazzAtt.getName().charAt(0)) == false) {
-			throw new IllegalArgumentException(
-					operation + ". Atributo con nombre incorrecto, '" + clazzAtt.getName()
-							+ "', se espera que sea CamelCase. " + msg);
-		}
-		if (clazzAtt.getOrderAtt() == null) {
-			throw new IllegalArgumentException(operation + ". Atributo con un orden nulo. "
+			throw new IllegalArgumentException(operation
+					+ ". Atributo con nombre incorrecto, '"
+					+ clazzAtt.getName()
+					+ "', se espera un nombre con la forma \"" + regex + "\". "
 					+ msg);
 		}
+		if (Character.isLowerCase(clazzAtt.getName().charAt(0)) == false) {
+			throw new IllegalArgumentException(operation
+					+ ". Atributo con nombre incorrecto, '"
+					+ clazzAtt.getName() + "', se espera que sea CamelCase. "
+					+ msg);
+		}
+		if (clazzAtt.getOrderAtt() == null) {
+			throw new IllegalArgumentException(operation
+					+ ". Atributo con un orden nulo. " + msg);
+		}
 		if (clazzAtt.getTypeCardinality() == null) {
-			throw new IllegalArgumentException(
-					operation + ". Atributo con cardinalidad nula. " + msg);
+			throw new IllegalArgumentException(operation
+					+ ". Atributo con cardinalidad nula. " + msg);
 		}
 		if (clazzAtt.getTypeCardinality().getName() == null) {
-			throw new IllegalArgumentException(
-					operation + ". Atributo con nombre de cardinalidad nula. " + msg);
+			throw new IllegalArgumentException(operation
+					+ ". Atributo con nombre de cardinalidad nula. " + msg);
 		}
 		if (clazzAtt.getTypeCardinality().getName().trim().length() == 0) {
-			throw new IllegalArgumentException(
-					operation + ". Atributo con nombre de cardinalidad vacia. " + msg);
+			throw new IllegalArgumentException(operation
+					+ ". Atributo con nombre de cardinalidad vacia. " + msg);
 		}
-		boolean b = false;
-		for (TypeCardinality item : UtilDataTypes.CARDINALITIES) {
-			if (item.equals(clazzAtt.getTypeCardinality())) {
-				b = true;
-				break;
-			}
-		}
-		if (b == false) {
-			throw new IllegalArgumentException(
-					operation + ". Atributo con nombre de cardinalidad que no existe, '"
-							+ clazzAtt.getTypeCardinality().getName() + "'. "
-							+ msg);
+		if (UtilDataTypes
+				.ifExistsTypeCardinality(clazzAtt.getTypeCardinality()) == false) {
+			throw new IllegalArgumentException(operation
+					+ ". Atributo con nombre de cardinalidad que no existe, '"
+					+ clazzAtt.getTypeCardinality().getName() + "'. " + msg);
 		}
 
 		String dataTypeName = null;
@@ -218,16 +217,19 @@ public class CreateClassBO {
 
 	}
 
-	private boolean checkUsableClass(String operation, Clazz clazz, String msg) throws Exception {
+	private boolean checkUsableClass(String operation, Clazz clazz, String msg)
+			throws Exception {
 
 		if (clazz.getVirtual() == null) {
 			throw new IllegalArgumentException(
-					operation + ". Se intento utilizar de una clase con el atributo 'virtual' nulo, "
+					operation
+							+ ". Se intento utilizar de una clase con el atributo 'virtual' nulo, "
 							+ clazz.getName() + ". " + msg);
 		}
 		if (clazz.getVirtual() == true) {
 			throw new IllegalArgumentException(
-					operation + ". Se intento utilizar de una clase con el atributo 'virtual' verdadero,  "
+					operation
+							+ ". Se intento utilizar de una clase con el atributo 'virtual' verdadero,  "
 							+ clazz.getName() + ". " + msg);
 		}
 
@@ -235,7 +237,8 @@ public class CreateClassBO {
 				&& clazz.getPackagesName().equals(clazz.getPackagesName()) == false) {
 
 			throw new IllegalArgumentException(
-					operation + ". Se intento utilizar de una clase privada que no se encuentra en el mismo paquete, "
+					operation
+							+ ". Se intento utilizar de una clase privada que no se encuentra en el mismo paquete, "
 							+ clazz.getName() + ". " + msg);
 		}
 
@@ -249,16 +252,18 @@ public class CreateClassBO {
 				if (ePackages[i].equals(thisPackages[i]) == false) {
 
 					throw new IllegalArgumentException(
-							operation + ". Se intento utilizar una clase 'pública descendente' que no se encuentra en la misma ruta de paquete, "
+							operation
+									+ ". Se intento utilizar una clase 'pública descendente' que no se encuentra en la misma ruta de paquete, "
 									+ clazz.getName() + ". " + msg);
 				}
 			}
 
 		}
 
-		if (ifExistsClassBO.ifExistsClass(clazz) == false) {
-			throw new IllegalArgumentException(operation + ". La clase no existe '"
-					+ clazz.getName() + "'. " + msg);
+		if (UtilDataTypes.isPrimitiveType(clazz) == false
+				&& ifExistsClassBO.ifExistsClass(clazz) == false) {
+			throw new IllegalArgumentException(operation
+					+ ". La clase no existe '" + clazz.getName() + "'. " + msg);
 		}
 
 		return true;
