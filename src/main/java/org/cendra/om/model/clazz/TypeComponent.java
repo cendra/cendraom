@@ -1,10 +1,10 @@
-package org.cendra.om.bo.clazz.model;
+package org.cendra.om.model.clazz;
 
-public class TypeCardinality {
+public class TypeComponent {
 
 	private String name;
 
-	public TypeCardinality(String name) {
+	public TypeComponent(String name) {
 		super();
 		setName(name);
 	}
@@ -39,7 +39,7 @@ public class TypeCardinality {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TypeCardinality other = (TypeCardinality) obj;
+		TypeComponent other = (TypeComponent) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;

@@ -1,28 +1,15 @@
-package org.cendra.om.bo.clazz.model.persist;
+package org.cendra.om.model.clazz;
 
-import org.cendra.om.bo.clazz.model.ClazzAtt;
+import org.cendra.om.util.UtilDataTypes;
 
-public class ClazzAttPersist {
+public class ClazzAtt {
 
 	private String id;
 
 	private String name;
-	private String dataType;
-	private String typeCardinality;
+	private Clazz dataType = UtilDataTypes.buildString();
+	private TypeCardinality typeCardinality = UtilDataTypes.CARDINALITY_1_1;
 	private Integer orderAtt = 0;
-
-	public ClazzAttPersist() {
-		super();
-	}
-	
-	public ClazzAttPersist(ClazzAtt clazzAtt) {			
-		super();
-		this.setId(clazzAtt.getId());
-		this.setName(clazzAtt.getName());
-		this.setDataType(clazzAtt.getDataType().getId());
-		this.setTypeCardinality(clazzAtt.getTypeCardinality().getName());
-		this.setOrderAtt(clazzAtt.getOrderAtt());
-	}
 
 	public String getId() {
 		if (id != null) {
@@ -55,19 +42,19 @@ public class ClazzAttPersist {
 		this.name = name;
 	}
 
-	public String getDataType() {
+	public Clazz getDataType() {
 		return dataType;
 	}
 
-	public void setDataType(String dataType) {
+	public void setDataType(Clazz dataType) {
 		this.dataType = dataType;
 	}
 
-	public String getTypeCardinality() {
+	public TypeCardinality getTypeCardinality() {
 		return typeCardinality;
 	}
 
-	public void setTypeCardinality(String typeCardinality) {
+	public void setTypeCardinality(TypeCardinality typeCardinality) {
 		this.typeCardinality = typeCardinality;
 	}
 
@@ -83,6 +70,13 @@ public class ClazzAttPersist {
 			this.orderAtt = 0;
 		}
 		this.orderAtt = orderAtt;
+	}
+
+	@Override
+	public String toString() {
+		return "ClazzAtt [id=" + id + ", name=" + name + ", dataType="
+				+ dataType + ", typeCardinality=" + typeCardinality
+				+ ", orderAtt=" + orderAtt + "]";
 	}
 
 }

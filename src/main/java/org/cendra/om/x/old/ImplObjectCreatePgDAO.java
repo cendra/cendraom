@@ -1,4 +1,4 @@
-package org.cendra.om.persist.dao.impl.dbrms.pg;
+package org.cendra.om.x.old;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.List;
 import org.cendra.jdbc.ConnectionWrapper;
 import org.cendra.jdbc.DataSourceWrapper;
 import org.cendra.jdbc.GenericDAO;
-import org.cendra.om.persist.dao.ObjectCreateDAO;
 import org.cendra.om.util.UtilAtts;
 import org.cendra.om.util.UtilTypesComponents;
 import org.cendra.om.util.UtilUUID;
@@ -14,7 +13,7 @@ import org.cendra.om.util.UtilUUID;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-public class ImplObjectCreatePgDAO extends GenericDAO implements
+class ImplObjectCreatePgDAO extends GenericDAO implements
 		ObjectCreateDAO {
 
 	protected DataSourceWrapper dataSourceWrapper;

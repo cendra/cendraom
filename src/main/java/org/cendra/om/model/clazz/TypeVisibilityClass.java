@@ -1,10 +1,10 @@
-package org.cendra.om.bo.clazz.model;
+package org.cendra.om.model.clazz;
 
-public class TypeComponent {
+public class TypeVisibilityClass {
 
 	private String name;
 
-	public TypeComponent(String name) {
+	public TypeVisibilityClass(String name) {
 		super();
 		setName(name);
 	}
@@ -39,7 +39,7 @@ public class TypeComponent {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TypeComponent other = (TypeComponent) obj;
+		TypeVisibilityClass other = (TypeVisibilityClass) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;

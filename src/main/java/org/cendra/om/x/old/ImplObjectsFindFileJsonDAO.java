@@ -1,21 +1,21 @@
-package org.cendra.om.persist.dao.impl.file;
+package org.cendra.om.x.old;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cendra.om.persist.dao.ObjectsListDAO;
+import org.cendra.om.model.clazz.TypeComponent;
 import org.cendra.om.util.UtilSerializeObjects;
 
 import com.google.gson.JsonObject;
 
-public class ImplObjectsListFileJsonDAO implements ObjectsListDAO {
+class ImplObjectsFindFileJsonDAO implements ObjectsFindDAO {
 
 	private String path;
 	
 	private UtilSerializeObjects serializeObjects;
 
-	public ImplObjectsListFileJsonDAO(String path) {
+	public ImplObjectsFindFileJsonDAO(String path) {
 		super();		
 		this.path = path;
 		
@@ -34,7 +34,7 @@ public class ImplObjectsListFileJsonDAO implements ObjectsListDAO {
 	// return jsonObject;
 	// }
 
-	public List<JsonObject> list() throws Exception {
+	public List<JsonObject> find() throws Exception {
 
 		List<JsonObject> listJsonObjects = new ArrayList<JsonObject>();
 
@@ -61,6 +61,19 @@ public class ImplObjectsListFileJsonDAO implements ObjectsListDAO {
 
 		return listJsonObjects;
 	}
+
+	public List<JsonObject> find(TypeComponent typeComponent) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public JsonObject findById(TypeComponent typeComponent, String id)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 	
 

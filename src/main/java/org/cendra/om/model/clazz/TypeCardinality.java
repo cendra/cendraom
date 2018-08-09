@@ -1,10 +1,10 @@
-package org.cendra.om.bo.clazz.model;
+package org.cendra.om.model.clazz;
 
-public class TypeVisibilityClass {
+public class TypeCardinality {
 
 	private String name;
 
-	public TypeVisibilityClass(String name) {
+	public TypeCardinality(String name) {
 		super();
 		setName(name);
 	}
@@ -39,7 +39,7 @@ public class TypeVisibilityClass {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TypeVisibilityClass other = (TypeVisibilityClass) obj;
+		TypeCardinality other = (TypeCardinality) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;

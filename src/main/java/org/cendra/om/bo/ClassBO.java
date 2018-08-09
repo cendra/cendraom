@@ -1,41 +1,28 @@
-package org.cendra.om.bo.clazz;
+package org.cendra.om.bo;
 
-import org.cendra.om.bo.clazz.model.Clazz;
-import org.cendra.om.bo.clazz.model.ClazzAtt;
-import org.cendra.om.bo.clazz.model.persist.ClazzPersist;
-import org.cendra.om.bo.object.CreateObjectBO;
+import java.util.List;
+
+import org.cendra.om.model.clazz.Clazz;
+import org.cendra.om.model.clazz.ClazzAtt;
+import org.cendra.om.persist.dao.ClazzDAO;
 import org.cendra.om.util.UtilDataTypes;
-import org.cendra.om.util.UtilSerializeObjects;
-import org.cendra.om.util.UtilTypesComponents;
 import org.cendra.om.util.UtilTypesVisibilityClass;
 
-import com.google.gson.JsonObject;
+public class ClassBO {
 
-public class CreateClassBO {
+	private ClazzDAO clazzDAO;
 
-	private CreateObjectBO createObjectBO;
-	private IfExistsClassBO ifExistsClassBO;
-	private UtilSerializeObjects utilSerializeObjects;
-
-	public CreateClassBO(CreateObjectBO createObjectBO,
-			IfExistsClassBO ifExistsClassBO,
-			UtilSerializeObjects utilSerializeObjects) {
+	public ClassBO(ClazzDAO clazzDAO) {
 		super();
-		this.createObjectBO = createObjectBO;
-		this.ifExistsClassBO = ifExistsClassBO;
-		this.utilSerializeObjects = utilSerializeObjects;
+		this.clazzDAO = clazzDAO;
 	}
 
 	public Clazz create() throws Exception {
 
-		Clazz classComponent = new Clazz();
+		Clazz clazz = new Clazz();
+		clazz = clazzDAO.create(clazz);
 
-		JsonObject jsonObject = createObjectBO
-				.create(UtilTypesComponents.CLASS_COMPONENT);
-		classComponent.setId(jsonObject.get("id").getAsString());
-		classComponent.setVirtual(jsonObject.get("virtual").getAsBoolean());
-
-		return classComponent;
+		return clazz;
 
 	}
 
@@ -43,28 +30,13 @@ public class CreateClassBO {
 
 		checkClass("Create Class", clazz, "");
 
-		if (ifExistsClassBO.ifExistsClass(clazz)) {
+		if (ifExists(clazz)) {
 			throw new IllegalArgumentException(
 					"Se intento crear una clase que ya existe '"
 							+ clazz.getName() + "'. ");
 		}
 
-		// ------------------------------------------------------------------------------------
-
-		// Gson gson = new Gson();
-		// String jsonString = gson.toJson(new
-		// ClassComponentPersist(classComponent));
-
-		// String jsonString = serializeObjects.toJsonByGson(new
-		// ClassComponentPersist(classComponent));
-		String jsonString = utilSerializeObjects
-				.toJsonByJackson(new ClazzPersist(clazz));
-
-		JsonObject jsonObject = createObjectBO.create(jsonString,
-				UtilTypesComponents.CLASS_COMPONENT);
-
-		clazz.setId(jsonObject.get("id").getAsString());
-		clazz.setVirtual(jsonObject.get("virtual").getAsBoolean());
+		clazz = clazzDAO.create(clazz);
 
 		return clazz;
 	}
@@ -95,6 +67,18 @@ public class CreateClassBO {
 			throw new IllegalArgumentException(operation
 					+ ". Clase con nombre incorrecto, '" + clazz.getName()
 					+ "', se espera que sea CamelCase. " + msg);
+		}
+		if (clazz.getVisibility() == null) {
+			throw new IllegalArgumentException(operation
+					+ ". Clase con visibilidad nula, '" + clazz.getName()
+					+ ". " + msg);
+		}
+
+		if (UtilTypesVisibilityClass.ifExistsTVisibility(clazz.getVisibility()) == false) {
+
+			throw new IllegalArgumentException(operation
+					+ ". Clase con visibilidad que no existe, '"
+					+ clazz.getName() + ". " + msg);
 		}
 
 		for (Clazz e : clazz.getExtendsClass()) {
@@ -180,6 +164,24 @@ public class CreateClassBO {
 					+ clazzAtt.getName() + "', se espera que sea CamelCase. "
 					+ msg);
 		}
+
+		int c = 0;
+
+		for (ClazzAtt item : clazz.getAtts()) {
+			if (item.getName().trim()
+					.equalsIgnoreCase(clazzAtt.getName().trim())) {
+				if (c >= 1) {
+					throw new IllegalArgumentException(operation
+							+ ". Atributo con nombre repetido, '"
+							+ clazzAtt.getName()
+							+ "', ya existe un atributo con el mismo nombre. "
+							+ msg);
+				}
+				c++;
+
+			}
+		}
+
 		if (clazzAtt.getOrderAtt() == null) {
 			throw new IllegalArgumentException(operation
 					+ ". Atributo con un orden nulo. " + msg);
@@ -261,7 +263,7 @@ public class CreateClassBO {
 		}
 
 		if (UtilDataTypes.isPrimitiveType(clazz) == false
-				&& ifExistsClassBO.ifExistsClass(clazz) == false) {
+				&& ifExists(clazz) == false) {
 			throw new IllegalArgumentException(operation
 					+ ". La clase no existe '" + clazz.getName() + "'. " + msg);
 		}
@@ -287,5 +289,18 @@ public class CreateClassBO {
 	// }
 	//
 	// }
+
+	public boolean ifExists(Clazz clazz) throws Exception {
+
+		return clazzDAO.ifExists(clazz.getName());
+	}
+
+	public Clazz findById(String id) throws Exception {
+		return clazzDAO.findById(id);
+	}
+
+	public List<Clazz> find() throws Exception {
+		return clazzDAO.find();
+	}
 
 }

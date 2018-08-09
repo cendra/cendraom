@@ -1,6 +1,6 @@
 package org.cendra.om.util;
 
-import org.cendra.om.bo.clazz.model.TypeComponent;
+import org.cendra.om.model.clazz.TypeComponent;
 
 public class UtilTypesComponents {
 	

@@ -1,8 +1,8 @@
-package org.cendra.om.persist.dao;
+package org.cendra.om.x.old;
 
 import com.google.gson.JsonObject;
 
-public interface ObjectCreateDAO {
+interface ObjectCreateDAO {
 
 	public JsonObject create(JsonObject jsonObject) throws Exception;
 }

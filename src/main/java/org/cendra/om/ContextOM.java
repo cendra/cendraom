@@ -11,16 +11,8 @@ import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.cendra.jdbc.DataSourceProperties;
 import org.cendra.jdbc.DataSourceWrapper;
-import org.cendra.om.bo.clazz.CreateClassBO;
-import org.cendra.om.bo.clazz.IfExistsClassBO;
-import org.cendra.om.bo.object.CreateObjectBO;
-import org.cendra.om.bo.object.ListObjectsBO;
-import org.cendra.om.persist.dao.impl.dbrms.pg.ImplClassIfExistsPgDAO;
-import org.cendra.om.persist.dao.impl.dbrms.pg.ImplObjectCreatePgDAO;
-import org.cendra.om.persist.dao.impl.file.ImplClassIfExistsFileJsonDAO;
-import org.cendra.om.persist.dao.impl.file.ImplObjectCreateFileJsonDAO;
-import org.cendra.om.persist.dao.impl.file.ImplObjectsListFileJsonDAO;
-import org.cendra.om.util.UtilSerializeObjects;
+import org.cendra.om.bo.ClassBO;
+import org.cendra.om.persist.dao.impl.dbrms.pg.ImplClassPgDAO;
 
 public class ContextOM {
 
@@ -212,38 +204,51 @@ public class ContextOM {
 
 	// ---------------------------------------------------------
 
-	public IfExistsClassBO buildIfExistsClassBO() {
+	// public IfExistsClassBO buildIfExistsClassBO() {
+	//
+	// if (source == SOURCE_PG) {
+	// return new IfExistsClassBO(new ImplClassIfExistsPgDAO(
+	// dataSourceWrapper));
+	// }
+	//
+	// return new IfExistsClassBO(new ImplClassIfExistsFileJsonDAO(path,
+	// new UtilSerializeObjects()));
+	// }
 
-		if (source == SOURCE_PG) {
-			return new IfExistsClassBO(new ImplClassIfExistsPgDAO(
-					dataSourceWrapper));
-		}
+	// public CreateClassBO buildCreateClassComponentBO() {
+	// return new CreateClassBO(buildCreateObjectBO(), buildIfExistsClassBO(),
+	// new UtilSerializeObjects());
+	// }
 
-		return new IfExistsClassBO(new ImplClassIfExistsFileJsonDAO(path,
-				new UtilSerializeObjects()));
+	public ClassBO buildClassBO() {
+		return new ClassBO(new ImplClassPgDAO(dataSourceWrapper));
 	}
 
-	public CreateClassBO buildCreateClassComponentBO() {
-		return new CreateClassBO(buildCreateObjectBO(), buildIfExistsClassBO(),
-				new UtilSerializeObjects());
-	}
+	// public FindClassBO buildFindClassBO() {
+	// return new FindClassBO(buildFindObjectsBO());
+	// }
 
 	// ---------------------------------------------------------
 
-	public CreateObjectBO buildCreateObjectBO() {
+	// public CreateObjectBO buildCreateObjectBO() {
+	//
+	// if (source == SOURCE_PG) {
+	// return new CreateObjectBO(new ImplObjectCreatePgDAO(
+	// dataSourceWrapper), new UtilSerializeObjects());
+	// }
+	//
+	// return new CreateObjectBO(new ImplObjectCreateFileJsonDAO(path),
+	// new UtilSerializeObjects());
+	//
+	// }
 
-		if (source == SOURCE_PG) {
-			return new CreateObjectBO(new ImplObjectCreatePgDAO(
-					dataSourceWrapper), new UtilSerializeObjects());
-		}
-
-		return new CreateObjectBO(new ImplObjectCreateFileJsonDAO(path),
-				new UtilSerializeObjects());
-
-	}
-
-	public ListObjectsBO buildListObjectsBO() {
-		return new ListObjectsBO(new ImplObjectsListFileJsonDAO(path));
-	}
+	// public FindObjectsBO buildFindObjectsBO() {
+	//
+	// if (source == SOURCE_PG) {
+	// return new FindObjectsBO(new ImplObjectsFindDAO(dataSourceWrapper));
+	// }
+	//
+	// return new FindObjectsBO(new ImplObjectsFindFileJsonDAO(path));
+	// }
 
 }

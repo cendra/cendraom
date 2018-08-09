@@ -1,4 +1,4 @@
-package org.cendra.om.bo.clazz.model;
+package org.cendra.om.model.clazz;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,9 @@ public class Clazz {
 	}
 
 	public void setVirtual(Boolean virtual) {
+		if(virtual == null){
+			virtual = false;
+		}
 		this.virtual = virtual;
 	}
 
@@ -132,6 +135,9 @@ public class Clazz {
 	}
 
 	public Boolean getFinalClass() {
+		if(finalClass == null){
+			finalClass = false;
+		}
 		return finalClass;
 	}
 
@@ -140,6 +146,9 @@ public class Clazz {
 	}
 
 	public Boolean getAbstractClass() {
+		if(abstractClass == null){
+			abstractClass = false;
+		}
 		return abstractClass;
 	}
 
@@ -229,5 +238,15 @@ public class Clazz {
 
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Clazz [id=" + id + ", virtual=" + virtual + ", name=" + name
+				+ ", visibility=" + visibility + ", finalClass=" + finalClass
+				+ ", abstractClass=" + abstractClass + ", extendsClass="
+				+ extendsClass + ", atts=" + atts + "]";
+	}
+	
+	
 
 }

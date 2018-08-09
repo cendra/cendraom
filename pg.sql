@@ -53,7 +53,7 @@ CREATE TABLE cendraom.Clazz
     -- id VARCHAR NOT NULL PRIMARY KEY DEFAULT uuid_generate_v4(),  
     id VARCHAR PRIMARY KEY DEFAULT uuid_generate_v4(),  
     virtual BOOLEAN NOT NULL DEFAULT false,
-    typeComponent VARCHAR  NOT NULL,
+   -- typeComponent VARCHAR  NOT NULL,
     
     name VARCHAR  NOT NULL UNIQUE,
     visibility VARCHAR  NOT NULL,
@@ -66,6 +66,7 @@ CREATE TABLE cendraom.Clazz
 -- DELETE FROM cendraom.Clazz;
 
 -- CREATE UNIQUE INDEX u_Clazz_name ON cendraom.Clazz (LOWER(TRIM(name)));
+DROP INDEX IF EXISTS u_Clazz_name CASCADE;
 CREATE UNIQUE INDEX u_Clazz_name ON cendraom.Clazz (TRIM(name));
 
 -- ---------------------------------------------------------------------------------------------------------------------------
@@ -110,6 +111,7 @@ CREATE TABLE cendraom.ClazzExtends
 
 -- SELECT * FROM cendraom.ClazzExtends;
 
+DROP INDEX IF EXISTS u_ClazzExtends_clazz_clazzExtends CASCADE;
 CREATE UNIQUE INDEX u_ClazzExtends_clazz_clazzExtends ON cendraom.ClazzExtends (TRIM(clazz), TRIM(clazzExtends));
 
 -- ---------------------------------------------------------------------------------------------------------------------------
@@ -161,7 +163,12 @@ CREATE TABLE cendraom.ClazzAtt
 -- DELETE FROM cendraom.ClazzAtt;
 
 -- CREATE UNIQUE INDEX u_Clazz_name ON cendraom.Clazz (LOWER(TRIM(name)));
-CREATE UNIQUE INDEX u_ClazzAtt_calzz_name ON cendraom.ClazzAtt (TRIM(clazz), TRIM(name));
+DROP INDEX IF EXISTS u_ClazzAtt_calzz_name CASCADE;
+CREATE UNIQUE INDEX u_ClazzAtt_calzz_name ON cendraom.ClazzAtt (TRIM(ClazzAtt.clazz), TRIM(ClazzAtt.name));
+
+
+-- INSERT INTO cendraom.ClazzAtt (id, clazz, name, dataType, typeCardinality, orderAtt) 
+-- VALUES ('b465fcf8-71bc-4e9b-8597-98c42bfdbabc', '46171755-b975-4431-be81-dd8de9919022', 'edad', 'org.cendra.om.model.datatype.String', '1-1', '3')
 
 -- ---------------------------------------------------------------------------------------------------------------------------
 
@@ -173,7 +180,7 @@ BEGIN
    
 	NEW.id := cendraom.white_is_null(TRIM(NEW.id));
     NEW.name := cendraom.white_is_null(TRIM(NEW.name));
-    NEW.name := cendraom.white_is_null(TRIM(NEW.dataType));
+    NEW.dataType := cendraom.white_is_null(TRIM(NEW.dataType));
 
 	RETURN NEW;
 END;
@@ -187,8 +194,13 @@ CREATE TRIGGER tgFormatClazzAtt BEFORE INSERT OR UPDATE
     ON cendraom.ClazzAtt FOR EACH ROW 
     EXECUTE PROCEDURE cendraom.ftgFormatClazzAtt();
     
+-- ==========================================================================================================================
+
+
 
 -- ==========================================================================================================================
+
+/*
 
 select 	z.name,
 		e.name
@@ -211,4 +223,16 @@ join cendraom.ClazzAtt
 DELETE FROM cendraom.ClazzAtt;
 DELETE FROM cendraom.ClazzExtends;
 DELETE FROM cendraom.Clazz;    
+
+
+SELECT * FROM cendraom.clazz ORDER BY name OFFSET 0 LIMIT 100
+
+
+SELECT cendraom.Clazz.id, cendraom.Clazz.name FROM cendraom.ClazzExtends JOIN cendraom.Clazz ON cendraom.ClazzExtends.clazzExtends = cendraom.Clazz.id WHERE cendraom.ClazzExtends.clazz = 'eb8ef90e-f5db-41e4-9d63-a454b0902336'
+
+SELECT ClazzAtt.*, cendraom.Clazz.name AS clazzDataTypeName FROM cendraom.ClazzAtt LEFT JOIN cendraom.Clazz ON cendraom.ClazzAtt.dataType = cendraom.Clazz.id WHERE cendraom.ClazzAtt.clazz = 'eb8ef90e-f5db-41e4-9d63-a454b0902336'
+
+SELECT ClazzAtt.*, cendraom.Clazz.name AS clazzDataTypeName FROM cendraom.ClazzAtt LEFT JOIN cendraom.Clazz ON cendraom.ClazzAtt.dataType = cendraom.Clazz.id WHERE cendraom.ClazzAtt.clazz = '21c149ca-c3b6-424c-a2c1-ee94e8b8eb50';
+
         
+*/

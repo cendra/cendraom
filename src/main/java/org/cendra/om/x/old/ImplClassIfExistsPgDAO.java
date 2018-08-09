@@ -1,10 +1,9 @@
-package org.cendra.om.persist.dao.impl.dbrms.pg;
+package org.cendra.om.x.old;
 
 import org.cendra.jdbc.ConnectionWrapper;
 import org.cendra.jdbc.DataSourceWrapper;
-import org.cendra.om.persist.dao.ClassIfExistsDAO;
 
-public class ImplClassIfExistsPgDAO implements ClassIfExistsDAO {
+class ImplClassIfExistsPgDAO implements ClassIfExistsDAO {
 
 	protected DataSourceWrapper dataSourceWrapper;
 

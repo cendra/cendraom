@@ -1,9 +1,8 @@
-package org.cendra.om.bo.clazz;
+package org.cendra.om.x.old;
 
-import org.cendra.om.bo.clazz.model.Clazz;
-import org.cendra.om.persist.dao.ClassIfExistsDAO;
+import org.cendra.om.model.clazz.Clazz;
 
-public class IfExistsClassBO {
+class IfExistsClassBO {
 
 	private ClassIfExistsDAO ifExistsClassDAO;
 

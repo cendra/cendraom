@@ -1,12 +1,12 @@
-package org.cendra.om.bo.clazz.model.persist;
+package org.cendra.om.x.old;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.cendra.om.bo.clazz.model.Clazz;
-import org.cendra.om.bo.clazz.model.ClazzAtt;
+import org.cendra.om.model.clazz.Clazz;
+import org.cendra.om.model.clazz.ClazzAtt;
 
-public class ClazzPersist {
+class ClazzPersist {
 
 	private String id;
 	private Boolean virtual;

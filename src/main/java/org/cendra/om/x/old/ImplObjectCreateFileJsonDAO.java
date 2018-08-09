@@ -1,14 +1,12 @@
-package org.cendra.om.persist.dao.impl.file;
+package org.cendra.om.x.old;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import org.cendra.om.persist.dao.ObjectCreateDAO;
-
 import com.google.gson.JsonObject;
 
-public class ImplObjectCreateFileJsonDAO implements ObjectCreateDAO {
+class ImplObjectCreateFileJsonDAO implements ObjectCreateDAO {
 
 	private String path;
 

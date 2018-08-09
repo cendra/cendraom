@@ -1,7 +1,7 @@
 package org.cendra.om.util;
 
-import org.cendra.om.bo.clazz.model.Clazz;
-import org.cendra.om.bo.clazz.model.TypeCardinality;
+import org.cendra.om.model.clazz.Clazz;
+import org.cendra.om.model.clazz.TypeCardinality;
 
 public class UtilDataTypes {
 
@@ -39,6 +39,26 @@ public class UtilDataTypes {
 		}
 		
 		return false;
+	}
+	
+	public static boolean isPrimitiveType(String clazzName){
+		for(Clazz primitiveType : PRIMITIVES_TYPES){
+			if(clazzName.equals(primitiveType.getName())){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public static Clazz getPrimitiveType(String clazzName){
+		for(Clazz primitiveType : PRIMITIVES_TYPES){
+			if(clazzName.equals(primitiveType.getName())){
+				return primitiveType;
+			}
+		}
+		
+		return null;
 	}
 	
 	public static boolean ifExistsTypeCardinality(TypeCardinality typeCardinality){

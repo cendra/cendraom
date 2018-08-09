@@ -1,13 +1,12 @@
-package org.cendra.om.bo.object;
+package org.cendra.om.x.old;
 
-import org.cendra.om.bo.clazz.model.TypeComponent;
-import org.cendra.om.persist.dao.ObjectCreateDAO;
+import org.cendra.om.model.clazz.TypeComponent;
 import org.cendra.om.util.UtilSerializeObjects;
 import org.cendra.om.util.UtilUUID;
 
 import com.google.gson.JsonObject;
 
-public class CreateObjectBO {
+class CreateObjectBO {
 
 	private ObjectCreateDAO createObjectDAO;
 

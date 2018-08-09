@@ -1,14 +1,13 @@
-package org.cendra.om.persist.dao.impl.file;
+package org.cendra.om.x.old;
 
 import java.io.File;
 
-import org.cendra.om.persist.dao.ClassIfExistsDAO;
 import org.cendra.om.util.UtilSerializeObjects;
 import org.cendra.om.util.UtilTypesComponents;
 
 import com.google.gson.JsonObject;
 
-public class ImplClassIfExistsFileJsonDAO implements ClassIfExistsDAO {
+class ImplClassIfExistsFileJsonDAO implements ClassIfExistsDAO {
 
 	private String path;
 

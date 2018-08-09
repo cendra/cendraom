@@ -225,7 +225,7 @@ public class ConnectionWrapper {
 			return executeQueryToListByCendraConvention(preparedStatement, sql);
 
 		} catch (SQLException e) {
-			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null);
+			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null, false);
 			throw this.buildSQLExceptionWrapper(e, OPERATION_TYPE_SELECT,
 					TITLE_SELECT, SUBJECT_SELECT);
 		}
@@ -246,7 +246,7 @@ public class ConnectionWrapper {
 		// System.out.println("SQL 2 " + sql);
 		printSQLWarning(resultSet.getWarnings());
 
-		printSQLEnd(msg, Duration.between(startTime, endTime));
+		printSQLEnd(msg, Duration.between(startTime, endTime), true);
 
 		MapperCendraConvention mapper = new MapperCendraConvention();
 		List list = new ArrayList();
@@ -305,7 +305,7 @@ public class ConnectionWrapper {
 			return executeQueryToTable(preparedStatement, sql);
 
 		} catch (SQLException e) {
-			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null);
+			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null, false);
 			throw this.buildSQLExceptionWrapper(e, OPERATION_TYPE_SELECT,
 					TITLE_SELECT, SUBJECT_SELECT);
 		}
@@ -327,7 +327,7 @@ public class ConnectionWrapper {
 
 		printSQLWarning(resultSet.getWarnings());
 
-		printSQLEnd(msg, Duration.between(startTime, endTime));
+		printSQLEnd(msg, Duration.between(startTime, endTime), true);
 
 		int c = resultSet.getMetaData().getColumnCount();
 
@@ -385,7 +385,7 @@ public class ConnectionWrapper {
 			return executeQueryToResultSet(preparedStatement, sql);
 
 		} catch (SQLException e) {
-			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null);
+			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null, false);
 			throw this.buildSQLExceptionWrapper(e, OPERATION_TYPE_SELECT,
 					TITLE_SELECT, SUBJECT_SELECT);
 		}
@@ -406,7 +406,7 @@ public class ConnectionWrapper {
 
 		printSQLWarning(resultSet.getWarnings());
 
-		printSQLEnd(msg, Duration.between(startTime, endTime));
+		printSQLEnd(msg, Duration.between(startTime, endTime), true);
 
 		// if (resultSet != null && resultSet.isClosed() == false) {
 		// resultSet.close();
@@ -448,7 +448,7 @@ public class ConnectionWrapper {
 			return execute(sql, args);
 
 		} catch (SQLException e) {
-			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null);
+			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null, false);
 			throw this.buildSQLExceptionWrapper(e, OPERATION_TYPE_INSERT,
 					TITLE_INSERT, SUBJECT_INSERT);
 		}
@@ -482,7 +482,7 @@ public class ConnectionWrapper {
 			return execute(sql, args);
 
 		} catch (SQLException e) {
-			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null);
+			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null, false);
 			throw this.buildSQLExceptionWrapper(e, OPERATION_TYPE_UPDATE,
 					TITLE_UPDATE, SUBJECT_UPDATE);
 		}
@@ -500,7 +500,7 @@ public class ConnectionWrapper {
 			return execute(sql, args);
 
 		} catch (SQLException e) {
-			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null);
+			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null, false);
 			throw this.buildSQLExceptionWrapper(e, OPERATION_TYPE_DELETE,
 					TITLE_DELETE, SUBJECT_DELETE);
 		}
@@ -544,7 +544,7 @@ public class ConnectionWrapper {
 
 		// System.out.println(preparedStatement);
 
-		printSQLEnd(msg, Duration.between(startTime, endTime));
+		printSQLEnd(msg, Duration.between(startTime, endTime), true);
 
 		// if (preparedStatement.isClosed() == false) {
 		// preparedStatement.close();
@@ -567,16 +567,23 @@ public class ConnectionWrapper {
 		return null;
 	}
 
-	private void printSQLEnd(String msgSql, Duration duration) {
+	private void printSQLEnd(String msgSql, Duration duration, boolean ok) {
 
 		if (isVerbose()) {
 
+			String s = "";
+			if (ok) {
+				s = "[OK]";
+			} else {
+				s = "[ERROR]";
+			}
+
 			if (duration != null) {
-				msgSql += "\n\n[OK] SQL ejecutando (Total query runtime: "
+				msgSql += "\n\n" + s + " SQL ejecutando (Total query runtime: "
 						+ duration.toMillis() + " Millis )"
 						+ ZonedDateTime.now() + "\n\n" + Util.sep();
 			} else {
-				msgSql += "\n\n[OK] SQL ejecutando " + ZonedDateTime.now()
+				msgSql += "\n\n" + s + " SQL ejecutando " + ZonedDateTime.now()
 						+ "\n\n" + Util.sep();
 			}
 
