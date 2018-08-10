@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="cendraom" schema="org_cendra_person" type="PostgreSQL - 9.6.2">
+   <tables>
+      <table name="person" numRows="0" remarks="" schema="org_cendra_person" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="varchar">
+            <child column="addressesperson_id" foreignKey="personaddress_addressesperson_id_fkey" implied="false" onDeleteCascade="false" schema="org_cendra_person" table="personaddress"/>
+            <child column="emailsperson_id" foreignKey="personemail_emailsperson_id_fkey" implied="false" onDeleteCascade="false" schema="org_cendra_person" table="personemail"/>
+            <child column="phonesperson_id" foreignKey="personphone_phonesperson_id_fkey" implied="false" onDeleteCascade="false" schema="org_cendra_person" table="personphone"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="fullname" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="birthdate" nullable="true" remarks="" size="13" type="date"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="person_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="personaddress" numRows="0" remarks="" schema="org_cendra_person" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="countrycode" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="adminarealevel1code" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="adminarealevel2" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="4" name="locality" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="5" name="neighbourhood" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="6" name="street" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="7" name="streetnumber" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="8" name="buildingfloor" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="9" name="buildingroom" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="10" name="building" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="11" name="postalcode" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="12" name="comment" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="13" name="addressesperson_id" nullable="false" remarks="" size="2147483647" type="varchar">
+            <parent column="id" foreignKey="personaddress_addressesperson_id_fkey" implied="false" onDeleteCascade="false" schema="org_cendra_person" table="person"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="personaddress_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="personemail" numRows="0" remarks="" schema="org_cendra_person" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="email" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="comment" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="emailsperson_id" nullable="false" remarks="" size="2147483647" type="varchar">
+            <parent column="id" foreignKey="personemail_emailsperson_id_fkey" implied="false" onDeleteCascade="false" schema="org_cendra_person" table="person"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="personemail_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="personphone" numRows="0" remarks="" schema="org_cendra_person" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="countrycode" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="2" name="phonenumber" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="comment" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="4" name="phonesperson_id" nullable="false" remarks="" size="2147483647" type="varchar">
+            <parent column="id" foreignKey="personphone_phonesperson_id_fkey" implied="false" onDeleteCascade="false" schema="org_cendra_person" table="person"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="personphone_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+   </tables>
+</database>

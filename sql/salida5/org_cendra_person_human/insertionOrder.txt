@@ -1,0 +1,5 @@
+humanidtype
+human
+humanbirth
+humannationality
+humanid

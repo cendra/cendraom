@@ -8,7 +8,7 @@ public class ClazzAtt {
 
 	private String name;
 	private Clazz dataType = UtilDataTypes.buildString();
-	private TypeCardinality typeCardinality = UtilDataTypes.CARDINALITY_1_1;
+	private TypeCardinality typeCardinality = UtilDataTypes.INTERNAL_OBJECT;
 	private Integer orderAtt = 0;
 
 	public String getId() {

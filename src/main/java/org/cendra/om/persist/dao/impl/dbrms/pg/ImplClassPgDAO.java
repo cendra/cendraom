@@ -1,11 +1,13 @@
 package org.cendra.om.persist.dao.impl.dbrms.pg;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.cendra.jdbc.ConnectionWrapper;
 import org.cendra.jdbc.DataSourceWrapper;
 import org.cendra.jdbc.GenericDAO;
+import org.cendra.jdbc.SQLExceptionWrapper;
 import org.cendra.om.model.clazz.Clazz;
 import org.cendra.om.model.clazz.ClazzAtt;
 import org.cendra.om.model.clazz.TypeCardinality;
@@ -137,11 +139,20 @@ public class ImplClassPgDAO extends GenericDAO implements ClazzDAO {
 
 				insert(connectionWrapper, nameTableDB3, nameAtts3, args3);
 			}
-			
-			
-			//----------------------------------------------------
-			aca va el codigo DML para crear las tablas !!			
-			//----------------------------------------------------
+
+			// ----------------------------------------------------
+
+			String sql = buildDMLCreateSchema(clazz);
+
+			connectionWrapper.genericExecute(sql);
+
+			sql = buildDMLCreateTable(clazz);
+
+			connectionWrapper.genericExecute(sql);
+
+			buildDMLCreateTableInternalObject(connectionWrapper, clazz);
+
+			// ----------------------------------------------------
 
 			connectionWrapper.commit();
 
@@ -153,6 +164,127 @@ public class ImplClassPgDAO extends GenericDAO implements ClazzDAO {
 		}
 
 		return clazz;
+	}
+
+	private String buildDMLCreateSchema(Clazz clazz) {
+		String sql = "";
+
+		String schemaName = clazz.getPackagesName().replace(".", "_");
+
+		sql += "CREATE SCHEMA IF NOT EXISTS " + schemaName + ";";
+
+		return sql;
+	}
+
+	private String buildDMLCreateTable(Clazz clazz) {
+		String sql = "";
+
+		String schemaName = clazz.getPackagesName().replace(".", "_");
+		String tableName = clazz.getSimpleName().replace(".", "_");
+
+		sql += "CREATE TABLE " + schemaName + "." + tableName;
+		sql += "\n(";
+		sql += "\n\tid VARCHAR(36) PRIMARY KEY DEFAULT uuid_generate_v4()\n";
+
+		for (Clazz extendsClass : clazz.getExtendsClass()) {
+			schemaName = extendsClass.getPackagesName().replace(".", "_");
+
+			String dataType = "VARCHAR(36) NOT NULL REFERENCES " + schemaName + "."
+					+ extendsClass.getSimpleName().replace(".", "_") + " (id)";
+
+			sql += "\n\t, extends" + extendsClass.getSimpleName() + "_id" + " "
+					+ dataType + "";
+		}
+
+		for (ClazzAtt att : clazz.getAtts()) {
+			String dataType = "";
+
+			if (UtilDataTypes.isPrimitiveType(att.getDataType())) {
+
+				if (UtilDataTypes.isBooleanType(att.getDataType())) {
+					dataType = "BOOLEAN";
+				} else if (UtilDataTypes.isStringType(att.getDataType())) {
+					dataType = "VARCHAR";
+				} else if (UtilDataTypes.isShortType(att.getDataType())) {
+					dataType = "SMALLINT";
+				} else if (UtilDataTypes.isIntegerType(att.getDataType())) {
+					dataType = "INTEGER";
+				} else if (UtilDataTypes.isLongType(att.getDataType())) {
+					dataType = "BIGINT";
+				} else if (UtilDataTypes.isFloatType(att.getDataType())) {
+					dataType = "REAL";
+				} else if (UtilDataTypes.isDoubleType(att.getDataType())) {
+					dataType = "FLOAT";
+				} else if (UtilDataTypes.isDateType(att.getDataType())) {
+					dataType = "DATE";
+				}
+
+			} else if (att.getTypeCardinality().equals(
+					UtilDataTypes.EXTERNAL_LEFT_OBJECT)) {
+
+				schemaName = att.getDataType().getPackagesName()
+						.replace(".", "_");
+
+				dataType = "VARCHAR(36) REFERENCES " + schemaName + "."
+						+ att.getDataType().getSimpleName() + " (id)";
+
+			}
+
+			if (dataType.trim().length() > 0) {
+				sql += "\n\t, " + att.getName() + " " + dataType + "";
+			}
+
+		}
+
+		sql += "\n)";
+
+		return sql;
+	}
+
+	private void buildDMLCreateTableInternalObject(
+			ConnectionWrapper connectionWrapper, Clazz clazz)
+			throws SQLExceptionWrapper, SQLException {
+
+		for (ClazzAtt att : clazz.getAtts()) {
+
+			if (UtilDataTypes.isPrimitiveType(att.getDataType()) == false) {
+
+				if (att.getTypeCardinality().equals(
+						UtilDataTypes.INTERNAL_OBJECT_LIST)) {
+
+					String schemaName = att.getDataType().getPackagesName()
+							.replace(".", "_");
+
+					String sql = "ALTER TABLE " + schemaName + "."
+							+ att.getDataType().getSimpleName()
+							+ " ADD COLUMN " + att.getName()
+							+ clazz.getSimpleName() + "_id" + " VARCHAR(36) NOT NULL REFERENCES "
+							+ schemaName + "." + clazz.getSimpleName()
+							+ " (id);";
+
+					connectionWrapper.genericExecute(sql);
+
+				} else if (att.getTypeCardinality().equals(
+						UtilDataTypes.INTERNAL_OBJECT)) {
+
+					String schemaName = att.getDataType().getPackagesName()
+							.replace(".", "_");
+
+					String sql = "ALTER TABLE " + schemaName + "."
+							+ att.getDataType().getSimpleName()
+							+ " ADD COLUMN " + att.getName()
+							+ clazz.getSimpleName() + "_id"
+							+ " VARCHAR(36) NOT NULL UNIQUE REFERENCES " + schemaName + "."
+							+ clazz.getSimpleName() + " (id);";
+
+					connectionWrapper.genericExecute(sql);
+
+				}
+
+			}
+
+		}
+
 	}
 
 	public boolean ifExists(String name) throws Exception {
@@ -257,7 +389,8 @@ public class ImplClassPgDAO extends GenericDAO implements ClazzDAO {
 				clazz.setName((String) table[i][2]);
 			}
 			if (table[i][3] != null) {
-				clazz.setVisibility(new TypeVisibilityClass((String) table[i][3]));
+				clazz.setVisibility(new TypeVisibilityClass(
+						(String) table[i][3]));
 			}
 			if (table[i][4] != null) {
 				clazz.setFinalClass((Boolean) table[i][4]);
@@ -307,7 +440,7 @@ public class ImplClassPgDAO extends GenericDAO implements ClazzDAO {
 				}
 				if (tableAtts[x][2] != null) {
 					att.setName((String) tableAtts[x][2]);
-					
+
 				}
 				if (tableAtts[x][3] != null) {
 
@@ -318,7 +451,7 @@ public class ImplClassPgDAO extends GenericDAO implements ClazzDAO {
 						Clazz dataTypeClazz = new Clazz();
 						dataTypeClazz.setId((String) tableAtts[x][3]);
 						dataTypeClazz.setName((String) tableAtts[x][6]);
-						
+
 						att.setDataType(dataTypeClazz);
 					}
 				}

@@ -174,13 +174,18 @@ public class Clazz {
 
 	public boolean addAtt(String name) {
 		return addAtt(name, UtilDataTypes.buildString());
+	}		
+	
+	public boolean addAtt(String name, Clazz dataType) {
+		return addAtt(name, dataType, UtilDataTypes.EXTERNAL_LEFT_OBJECT);
 	}
 
-	public boolean addAtt(String name, Clazz dataType) {
+	public boolean addAtt(String name, Clazz dataType, TypeCardinality typeCardinality) {
 		ClazzAtt clazzAtt = new ClazzAtt();
 		clazzAtt.setName(name);
 		clazzAtt.setDataType(dataType);
 		clazzAtt.setOrderAtt(atts.size() + 1);
+		clazzAtt.setTypeCardinality(typeCardinality);
 
 		return atts.add(clazzAtt);
 	}

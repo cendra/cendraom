@@ -1,0 +1,9 @@
+java -jar schemaspy-6.0.0.jar -t pgsql -all -s cendraom -db cendraom -u postgres -host localhost -o D:\dev\source\cendraom\sql\salida -dp postgresql-9.4.1212.jar -gv D:\programas\graphviz-2.38\release
+java -jar schemaspy_6.0.0.jar -t pgsql -all -s cendraom -db cendraom -u postgres -host localhost -o D:\dev\source\cendraom\sql\salida -dp postgresql-9.4.1212.jar -gv D:\programas\graphviz-2.38\release
+
+java -jar schemaspy-6.0.0.jar -t pgsql -all -db cendraom -u postgres -host localhost -o D:\dev\source\cendraom\sql\salida -dp postgresql-9.4.1212.jar -gv D:\programas\graphviz-2.38\release
+
+
+
+java -jar schemaspy-6.0.0.jar -t pgsql -s 'cendraom, org_cendra_person, org_cendra_person_human'  -db cendraom -u postgres -host localhost -o D:\dev\source\cendraom\sql\salida -dp postgresql-9.4.1212.jar -gv D:\programas\graphviz-2.38\release
+java -jar schemaspy_6.0.0.jar -t pgsql -all -s cendraom -db cendraom -u postgres -host localhost -o D:\dev\source\cendraom\sql\salida -dp postgresql-9.4.1212.jar -gv D:\programas\graphviz-2.38\release

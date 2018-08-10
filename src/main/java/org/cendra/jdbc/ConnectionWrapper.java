@@ -26,6 +26,7 @@ public class ConnectionWrapper {
 	private final String OPERATION_TYPE_INSERT = "INSERT";
 	private final String OPERATION_TYPE_UPDATE = "UPDATE";
 	private final String OPERATION_TYPE_DELETE = "DELETE";
+	private final String OPERATION_TYPE_EXECUTE = "EXECUTE";
 
 	private final String TITLE_BEGIN_TRANSACTION = "Comienzo de Transacción";
 	private final String TITLE_COMMIT_TRANSACTION = "Fin de Transacción";
@@ -35,6 +36,7 @@ public class ConnectionWrapper {
 	private final String TITLE_INSERT = "Insertando un Registro";
 	private final String TITLE_UPDATE = "Actualizando un Registro";
 	private final String TITLE_DELETE = "Borrando un Registro";
+	private final String TITLE_EXECUTE = "Modificando la base de datos";
 
 	private final String SUBJECT_BEGIN_TRANSACTION = "Error al intentar iniciar una transacción.";
 	private final String SUBJECT_COMMIT_TRANSACTION = "Fin de Transacción";
@@ -44,6 +46,7 @@ public class ConnectionWrapper {
 	private final String SUBJECT_INSERT = "Error al intentar insertar un registro.";
 	private final String SUBJECT_UPDATE = "Error al intentar actualizar un registro.";
 	private final String SUBJECT_DELETE = "Error al intentar borrar un registro.";
+	private final String SUBJECT_EXECUTE = "Error al intentar modificar la base de datos.";
 
 	private final String MSG_1 = "Se pretende agregar un parámetro a una sentencia sql que posee un tipo de dato desconocido. Se recibió [${value}] de tipo ${class}, y se espera String | Boolean | Short | Integer | Long | Float | Double | BigDecimal | Date | Timestamp | Time";
 
@@ -418,6 +421,40 @@ public class ConnectionWrapper {
 		// }
 
 		return resultSet;
+	}
+
+	public int genericExecute(String sql) throws SQLExceptionWrapper, SQLException {
+		return genericExecute(sql, new Object[0]);
+	}
+
+	public int genericExecute(String sql, Object... args) throws SQLExceptionWrapper,
+			SQLException {
+
+		try {
+
+			// PreparedStatement preparedStatement = this.getConnection()
+			// .prepareStatement(sql);
+			// printSQLWarning(preparedStatement.getWarnings());
+			//
+			// if (args != null) {
+			// for (int i = 0; i < args.length; i++) {
+			// set(preparedStatement, args[i], (i + 1));
+			// }
+			// }
+			//
+			// sql = this.formatSQL(preparedStatement, args, sql);
+			//
+			// this.addSqlStatement(sql);
+			//
+			// return executeUpdateByExample(preparedStatement, sql);
+
+			return execute(sql, args);
+
+		} catch (SQLException e) {
+			printSQLEnd(buildPrintSQLStart(formatSQL(args, sql)), null, false);
+			throw this.buildSQLExceptionWrapper(e, OPERATION_TYPE_EXECUTE,
+					TITLE_EXECUTE, SUBJECT_EXECUTE);
+		}
 	}
 
 	public int insert(String sql) throws SQLExceptionWrapper, SQLException {

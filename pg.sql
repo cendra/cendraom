@@ -236,3 +236,7 @@ SELECT ClazzAtt.*, cendraom.Clazz.name AS clazzDataTypeName FROM cendraom.ClazzA
 
         
 */
+
+
+DROP SCHEMA IF EXISTS org_cendra_person CASCADE;
+DROP SCHEMA IF EXISTS org_cendra_person_human CASCADE;

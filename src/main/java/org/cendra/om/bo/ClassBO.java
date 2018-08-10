@@ -150,12 +150,18 @@ public class ClassBO {
 			throw new IllegalArgumentException(operation
 					+ ". Atributo con un nombre vacio. " + msg);
 		}
-		String regex = "^[a-zA-Z'.]{1,100}$";
+		String regex = "^[a-zA-Z0-9'.]{1,100}$";
 		if (clazzAtt.getName().matches(regex) == false) {
 			throw new IllegalArgumentException(operation
 					+ ". Atributo con nombre incorrecto, '"
 					+ clazzAtt.getName()
 					+ "', se espera un nombre con la forma \"" + regex + "\". "
+					+ msg);
+		}
+		if (Character.isDigit(clazzAtt.getName().charAt(0))) {
+			throw new IllegalArgumentException(operation
+					+ ". Atributo con nombre incorrecto, '"
+					+ clazzAtt.getName() + "', se espera la primera letra no sea un número. "
 					+ msg);
 		}
 		if (Character.isLowerCase(clazzAtt.getName().charAt(0)) == false) {
