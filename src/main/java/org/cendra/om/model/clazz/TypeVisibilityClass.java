@@ -11,14 +11,24 @@ public class TypeVisibilityClass {
 
 	public String getName() {
 		if (name != null) {
-			this.name = name.trim();
+
+			name = name.trim().toLowerCase();
+
+			if (name.length() == 0) {
+				name = null;
+			}
 		}
 		return name;
 	}
 
 	public void setName(String name) {
 		if (name != null) {
-			this.name = name.trim();
+
+			name = name.trim().toLowerCase();
+
+			if (name.length() == 0) {
+				name = null;
+			}
 		}
 		this.name = name;
 	}

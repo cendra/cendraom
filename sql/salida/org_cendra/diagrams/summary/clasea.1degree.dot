@@ -1,0 +1,43 @@
+// dot 2.38.0 on Windows 10 10.0
+// SchemaSpy rev 590
+digraph "clasea" {
+  graph [
+    rankdir="RL"
+    bgcolor="#f7f7f7"
+    nodesep="0.18"
+    ranksep="0.46"
+    fontname="Helvetica"
+    fontsize="11"
+  ];
+  node [
+    fontname="Helvetica"
+    fontsize="11"
+    shape="plaintext"
+  ];
+  edge [
+    arrowsize="0.8"
+  ];
+  "clasea" [
+    label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
+      <TR><TD COLSPAN="3" BGCOLOR="#9bab96" ALIGN="CENTER">clasea</TD></TR>
+      <TR><TD PORT="id" COLSPAN="3" BGCOLOR="#bed1b8" ALIGN="LEFT">id</TD></TR>
+      <TR><TD PORT="atributo1" COLSPAN="3" ALIGN="LEFT">atributo1</TD></TR>
+      <TR><TD PORT="atributo2" COLSPAN="3" ALIGN="LEFT">atributo2</TD></TR>
+      <TR><TD PORT="atributo3" COLSPAN="3" ALIGN="LEFT">atributo3</TD></TR>
+      <TR><TD PORT="atributo4" COLSPAN="3" ALIGN="LEFT">atributo4</TD></TR>
+      <TR><TD PORT="atributo5" COLSPAN="3" ALIGN="LEFT">atributo5</TD></TR>
+      <TR><TD PORT="atributo6" COLSPAN="3" ALIGN="LEFT">atributo6</TD></TR>
+      <TR><TD PORT="atributo7" COLSPAN="3" ALIGN="LEFT">atributo7</TD></TR>
+      <TR><TD PORT="atributo8" COLSPAN="3" ALIGN="LEFT">atributo8</TD></TR>
+      <TR><TD PORT="atributo9" COLSPAN="3" ALIGN="LEFT">atributo9</TD></TR>
+      <TR><TD PORT="atributo10" COLSPAN="3" ALIGN="LEFT">atributo10</TD></TR>
+      <TR><TD PORT="atributo11" COLSPAN="3" ALIGN="LEFT">atributo11</TD></TR>
+      <TR><TD PORT="atributo12_atributo1" COLSPAN="3" ALIGN="LEFT">atributo12_atributo1</TD></TR>
+      <TR><TD PORT="atributo13_atributo1" COLSPAN="3" ALIGN="LEFT">atributo13_atributo1</TD></TR>
+      <TR><TD ALIGN="LEFT" BGCOLOR="#f7f7f7">  </TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#f7f7f7">  </TD></TR>
+    </TABLE>>
+    URL="tables/clasea.html"
+    tooltip="clasea"
+  ];
+}

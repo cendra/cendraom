@@ -1,4 +1,0 @@
-personphone
-personemail
-personaddress
-person

@@ -1,54 +1,101 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <database name="cendraom" schema="cendraom" type="PostgreSQL - 9.6.2">
    <tables>
-      <table name="clazz" numRows="0" remarks="" schema="cendraom" type="TABLE">
+      <table name="clazz" numRows="6" remarks="" schema="cendraom" type="TABLE">
          <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="varchar">
-            <child column="clazz" foreignKey="clazzatt_clazz_fkey" implied="false" onDeleteCascade="false" schema="cendraom" table="clazzatt"/>
-            <child column="clazz" foreignKey="clazzextends_clazz_fkey" implied="false" onDeleteCascade="false" schema="cendraom" table="clazzextends"/>
-            <child column="clazzextends" foreignKey="clazzextends_clazzextends_fkey" implied="false" onDeleteCascade="false" schema="cendraom" table="clazzextends"/>
+            <child column="extendsfrom" foreignKey="clazz_extendsfrom_fkey" implied="false" onDeleteCascade="false" table="clazz"/>
+            <child column="datatypeclazz" foreignKey="clazzattribute_datatypeclazz_fkey" implied="false" onDeleteCascade="false" table="clazzattribute"/>
+            <child column="memberofclazz" foreignKey="clazzattribute_memberofclazz_fkey" implied="false" onDeleteCascade="false" table="clazzattribute"/>
+            <child column="labelof" foreignKey="clazzlabel_labelof_fkey" implied="false" onDeleteCascade="false" table="clazzlabel"/>
          </column>
-         <column autoUpdated="false" defaultValue="false" digits="0" id="1" name="virtual" nullable="false" remarks="" size="1" type="bool"/>
-         <column autoUpdated="false" digits="0" id="2" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="1" name="isvirtual" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="2" name="isextendable" nullable="false" remarks="" size="1" type="bool"/>
          <column autoUpdated="false" digits="0" id="3" name="visibility" nullable="false" remarks="" size="2147483647" type="varchar"/>
-         <column autoUpdated="false" defaultValue="false" digits="0" id="4" name="finalclass" nullable="false" remarks="" size="1" type="bool"/>
-         <column autoUpdated="false" defaultValue="false" digits="0" id="5" name="abstractclass" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="4" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="5" name="extendsfrom" nullable="true" remarks="" size="2147483647" type="varchar">
+            <parent column="id" foreignKey="clazz_extendsfrom_fkey" implied="false" onDeleteCascade="false" table="clazz"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="6" name="comment" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="7" name="labelname" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="8" name="labelcomment" nullable="true" remarks="" size="2147483647" type="varchar"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
          <index name="clazz_pkey" unique="true">
             <column ascending="true" name="id"/>
          </index>
-         <index name="clazz_name_key" unique="true">
-            <column ascending="true" name="name"/>
-         </index>
          <index name="u_clazz_name" unique="true"/>
       </table>
-      <table name="clazzatt" numRows="0" remarks="" schema="cendraom" type="TABLE">
-         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="1" name="clazz" nullable="false" remarks="" size="2147483647" type="varchar">
-            <parent column="id" foreignKey="clazzatt_clazz_fkey" implied="false" onDeleteCascade="false" schema="cendraom" table="clazz"/>
+      <table name="clazzattribute" numRows="49" remarks="" schema="cendraom" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="varchar">
+            <child column="memberofattribute" foreignKey="clazzattribute_memberofattribute_fkey" implied="false" onDeleteCascade="false" table="clazzattribute"/>
+            <child column="labelof" foreignKey="clazzattributelabel_labelof_fkey" implied="false" onDeleteCascade="false" table="clazzattributelabel"/>
          </column>
-         <column autoUpdated="false" digits="0" id="2" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="3" name="datatype" nullable="false" remarks="" size="2147483647" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="4" name="typecardinality" nullable="false" remarks="" size="2147483647" type="varchar"/>
-         <column autoUpdated="false" defaultValue="0" digits="0" id="5" name="orderatt" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="1" name="memberofattribute" nullable="true" remarks="" size="2147483647" type="varchar">
+            <parent column="id" foreignKey="clazzattribute_memberofattribute_fkey" implied="false" onDeleteCascade="false" table="clazzattribute"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="memberofclazz" nullable="true" remarks="" size="2147483647" type="varchar">
+            <parent column="id" foreignKey="clazzattribute_memberofclazz_fkey" implied="false" onDeleteCascade="false" table="clazz"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="3" name="code" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" defaultValue="0" digits="0" id="4" name="orderatt" nullable="false" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="5" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="6" name="comment" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="7" name="datatypeboolean" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="8" name="datatypestring" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="9" name="datatypeshort" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="10" name="datatypeinteger" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="11" name="datatypelong" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="12" name="datatypefloat" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="13" name="datatypedouble" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="14" name="datatypebigdecial" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="15" name="datatypedate" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="16" name="datatypetimestamp" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="17" name="datatypetime" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="18" name="datatypeclazz" nullable="true" remarks="" size="2147483647" type="varchar">
+            <parent column="id" foreignKey="clazzattribute_datatypeclazz_fkey" implied="false" onDeleteCascade="false" table="clazz"/>
+         </column>
+         <column autoUpdated="false" defaultValue="false" digits="0" id="19" name="isarray" nullable="false" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="20" name="labelname" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="21" name="labelcomment" nullable="true" remarks="" size="2147483647" type="varchar"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
-         <index name="clazzatt_pkey" unique="true">
+         <index name="clazzattribute_pkey" unique="true">
             <column ascending="true" name="id"/>
          </index>
-         <index name="u_clazzatt_calzz_name" unique="true"/>
+         <index name="u_clazzattribute_memberofattribute_name" unique="true"/>
+         <index name="u_clazzattribute_memberofattribute_orderatt" unique="true">
+            <column ascending="true" name="orderatt"/>
+         </index>
+         <index name="u_clazzattribute_memberofclazz_name" unique="true"/>
+         <index name="u_clazzattribute_memberofclazz_orderatt" unique="true">
+            <column ascending="true" name="orderatt"/>
+         </index>
       </table>
-      <table name="clazzextends" numRows="0" remarks="" schema="cendraom" type="TABLE">
+      <table name="clazzattributelabel" numRows="0" remarks="" schema="cendraom" type="TABLE">
          <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="varchar"/>
-         <column autoUpdated="false" digits="0" id="1" name="clazz" nullable="false" remarks="" size="2147483647" type="varchar">
-            <parent column="id" foreignKey="clazzextends_clazz_fkey" implied="false" onDeleteCascade="false" schema="cendraom" table="clazz"/>
+         <column autoUpdated="false" digits="0" id="1" name="labelof" nullable="false" remarks="" size="2147483647" type="varchar">
+            <parent column="id" foreignKey="clazzattributelabel_labelof_fkey" implied="false" onDeleteCascade="false" table="clazzattribute"/>
          </column>
-         <column autoUpdated="false" digits="0" id="2" name="clazzextends" nullable="false" remarks="" size="2147483647" type="varchar">
-            <parent column="id" foreignKey="clazzextends_clazzextends_fkey" implied="false" onDeleteCascade="false" schema="cendraom" table="clazz"/>
-         </column>
+         <column autoUpdated="false" digits="0" id="2" name="locale" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="4" name="comment" nullable="true" remarks="" size="2147483647" type="varchar"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
-         <index name="clazzextends_pkey" unique="true">
+         <index name="clazzattributelabel_pkey" unique="true">
             <column ascending="true" name="id"/>
          </index>
-         <index name="u_clazzextends_clazz_clazzextends" unique="true"/>
+         <index name="u_clazzattributelabel_labelof_locale_name" unique="true"/>
+      </table>
+      <table name="clazzlabel" numRows="0" remarks="" schema="cendraom" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="labelof" nullable="false" remarks="" size="2147483647" type="varchar">
+            <parent column="id" foreignKey="clazzlabel_labelof_fkey" implied="false" onDeleteCascade="false" table="clazz"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="locale" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="name" nullable="false" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="4" name="comment" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clazzlabel_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="u_clazzlabel_labelof_locale_name" unique="true"/>
       </table>
    </tables>
 </database>

@@ -1,0 +1,17 @@
+clasea_atributo16
+clasea_atributo13_atributo4_atributo3_atributo4
+clasec_atributo3
+clasea_atributo14
+clasea_atributo13_atributo5
+clasea_atributo13_atributo3_atributo3
+clasea_atributo12
+clasea_atributo13_atributo4_atributo3
+clasec
+clasea_atributo13_atributo3
+claseb
+clasea_atributo13_atributo4
+clasea_atributo13
+clasea
+clasey
+clasex
+clasez

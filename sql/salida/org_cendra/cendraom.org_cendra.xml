@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="cendraom" schema="org_cendra" type="PostgreSQL - 9.6.2">
+   <tables>
+      <table name="clasea" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <child column="id" foreignKey="clasea_atributo12_id_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo12"/>
+            <child column="clasea_id" foreignKey="clasea_atributo13_clasea_id_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13"/>
+            <child column="clasea_id" foreignKey="clasea_atributo14_clasea_id_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo14"/>
+            <child column="clasea_id" foreignKey="clasea_atributo16_clasea_id_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo16"/>
+            <child column="id" foreignKey="claseb_id_fkey" implied="false" onDeleteCascade="false" table="claseb"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="atributo1" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="2" name="atributo2" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="atributo3" nullable="true" remarks="" size="5" type="int2"/>
+         <column autoUpdated="false" digits="0" id="4" name="atributo4" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="0" id="5" name="atributo5" nullable="true" remarks="" size="19" type="int8"/>
+         <column autoUpdated="false" digits="8" id="6" name="atributo6" nullable="true" remarks="" size="8" type="float4"/>
+         <column autoUpdated="false" digits="17" id="7" name="atributo7" nullable="true" remarks="" size="17" type="float8"/>
+         <column autoUpdated="false" digits="0" id="8" name="atributo8" nullable="true" remarks="" size="131089" type="numeric"/>
+         <column autoUpdated="false" digits="0" id="9" name="atributo9" nullable="true" remarks="" size="13" type="date"/>
+         <column autoUpdated="false" digits="6" id="10" name="atributo10" nullable="true" remarks="" size="29" type="timestamp"/>
+         <column autoUpdated="false" digits="6" id="11" name="atributo11" nullable="true" remarks="" size="15" type="time"/>
+         <column autoUpdated="false" digits="0" id="12" name="atributo15" nullable="true" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo15_fkey" implied="false" onDeleteCascade="false" table="clasex"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasea_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="clasea_atributo12" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo12_id_fkey" implied="false" onDeleteCascade="false" table="clasea"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="atributo1" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="2" name="atributo2" nullable="true" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasea_atributo12_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="clasea_atributo13" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <child column="id" foreignKey="clasea_atributo13_atributo3_id_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13_atributo3"/>
+            <child column="clasea_atributo13_id" foreignKey="clasea_atributo13_atributo4_clasea_atributo13_id_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13_atributo4"/>
+            <child column="clasea_atributo13_id" foreignKey="clasea_atributo13_atributo5_clasea_atributo13_id_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13_atributo5"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="clasea_id" nullable="false" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo13_clasea_id_fkey" implied="false" onDeleteCascade="false" table="clasea"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="atributo1" nullable="true" remarks="" size="10" type="int4"/>
+         <column autoUpdated="false" digits="6" id="3" name="atributo2" nullable="true" remarks="" size="29" type="timestamp"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasea_atributo13_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="u_org_cendra_clasea_atributo13_id_clasea_id" unique="true"/>
+      </table>
+      <table name="clasea_atributo13_atributo3" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <child column="clasea_atributo13_atributo3_id" foreignKey="clasea_atributo13_atributo3_a_clasea_atributo13_atributo3__fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13_atributo3_atributo3"/>
+            <parent column="id" foreignKey="clasea_atributo13_atributo3_id_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="atributo1" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="2" name="atributo2" nullable="true" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasea_atributo13_atributo3_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="clasea_atributo13_atributo3_atributo3" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="clasea_atributo13_atributo3_id" nullable="false" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo13_atributo3_a_clasea_atributo13_atributo3__fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13_atributo3"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="atributo1" nullable="true" remarks="" size="1" type="bool"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasea_atributo13_atributo3_atributo3_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="u_org_cendra_clasea_atributo13_atributo3_atributo3_id_clasea_at" unique="true"/>
+      </table>
+      <table name="clasea_atributo13_atributo4" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <child column="clasea_atributo13_atributo4_id" foreignKey="clasea_atributo13_atributo4_a_clasea_atributo13_atributo4__fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13_atributo4_atributo3"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="clasea_atributo13_id" nullable="false" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo13_atributo4_clasea_atributo13_id_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="atributo1" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="3" name="atributo2" nullable="true" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasea_atributo13_atributo4_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="u_org_cendra_clasea_atributo13_atributo4_id_clasea_atributo13_i" unique="true"/>
+      </table>
+      <table name="clasea_atributo13_atributo4_atributo3" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <child column="clasea_atributo13_atributo4_atributo3_id" foreignKey="clasea_atributo13_atributo4__clasea_atributo13_atributo4__fkey1" implied="false" onDeleteCascade="false" table="clasea_atributo13_atributo4_atributo3_atributo4"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="clasea_atributo13_atributo4_id" nullable="false" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo13_atributo4_a_clasea_atributo13_atributo4__fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13_atributo4"/>
+         </column>
+         <column autoUpdated="false" digits="6" id="2" name="atributo1" nullable="true" remarks="" size="15" type="time"/>
+         <column autoUpdated="false" digits="6" id="3" name="atributo2" nullable="true" remarks="" size="15" type="time"/>
+         <column autoUpdated="false" digits="0" id="4" name="atributo3" nullable="true" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo13_atributo4_atributo3_atributo3_fkey" implied="false" onDeleteCascade="false" table="clasez"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasea_atributo13_atributo4_atributo3_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="u_org_cendra_clasea_atributo13_atributo4_atributo3_id_clasea_at" unique="true"/>
+      </table>
+      <table name="clasea_atributo13_atributo4_atributo3_atributo4" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="clasea_atributo13_atributo4_atributo3_id" nullable="false" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo13_atributo4__clasea_atributo13_atributo4__fkey1" implied="false" onDeleteCascade="false" table="clasea_atributo13_atributo4_atributo3"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="atributo4" nullable="true" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo13_atributo4_atributo3_atributo4_atributo4_fkey" implied="false" onDeleteCascade="false" table="clasez"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasea_atributo13_atributo4_atributo3_atributo4_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="u_org_cendra_clasea_atributo13_atributo4_atributo3_atributo4_id" unique="true"/>
+      </table>
+      <table name="clasea_atributo13_atributo5" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="clasea_atributo13_id" nullable="false" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo13_atributo5_clasea_atributo13_id_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="atributo5" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasea_atributo13_atributo5_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="u_org_cendra_clasea_atributo13_atributo5_id_clasea_atributo13_i" unique="true"/>
+      </table>
+      <table name="clasea_atributo14" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="clasea_id" nullable="false" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo14_clasea_id_fkey" implied="false" onDeleteCascade="false" table="clasea"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="atributo14" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasea_atributo14_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="u_org_cendra_clasea_atributo14_id_clasea_id" unique="true"/>
+      </table>
+      <table name="clasea_atributo16" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="1" name="clasea_id" nullable="false" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo16_clasea_id_fkey" implied="false" onDeleteCascade="false" table="clasea"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="2" name="atributo16" nullable="true" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasea_atributo16_atributo16_fkey" implied="false" onDeleteCascade="false" table="clasey"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasea_atributo16_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="u_org_cendra_clasea_atributo16_id_clasea_id" unique="true"/>
+      </table>
+      <table name="claseb" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <child column="id" foreignKey="clasec_id_fkey" implied="false" onDeleteCascade="false" table="clasec"/>
+            <parent column="id" foreignKey="claseb_id_fkey" implied="false" onDeleteCascade="false" table="clasea"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="atributo1" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="2" name="atributo2" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="atributo3" nullable="true" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="claseb_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="clasec" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <child column="id" foreignKey="clasec_atributo3_id_fkey" implied="false" onDeleteCascade="false" table="clasec_atributo3"/>
+            <parent column="id" foreignKey="clasec_id_fkey" implied="false" onDeleteCascade="false" table="claseb"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="atributo1" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="2" name="atributo2" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasec_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="clasec_atributo3" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <parent column="id" foreignKey="clasec_atributo3_id_fkey" implied="false" onDeleteCascade="false" table="clasec"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasec_atributo3_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="clasex" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <child column="atributo15" foreignKey="clasea_atributo15_fkey" implied="false" onDeleteCascade="false" table="clasea"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="atributo1" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="2" name="atributo2" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="atributo3" nullable="true" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasex_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="clasey" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <child column="atributo16" foreignKey="clasea_atributo16_atributo16_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo16"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="atributo1" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="2" name="atributo2" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="atributo3" nullable="true" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasey_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="clasez" numRows="0" remarks="" schema="org_cendra" type="TABLE">
+         <column autoUpdated="false" defaultValue="uuid_generate_v4()" digits="0" id="0" name="id" nullable="false" remarks="" size="36" type="varchar">
+            <child column="atributo3" foreignKey="clasea_atributo13_atributo4_atributo3_atributo3_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13_atributo4_atributo3"/>
+            <child column="atributo4" foreignKey="clasea_atributo13_atributo4_atributo3_atributo4_atributo4_fkey" implied="false" onDeleteCascade="false" table="clasea_atributo13_atributo4_atributo3_atributo4"/>
+         </column>
+         <column autoUpdated="false" digits="0" id="1" name="atributo1" nullable="true" remarks="" size="1" type="bool"/>
+         <column autoUpdated="false" digits="0" id="2" name="atributo2" nullable="true" remarks="" size="2147483647" type="varchar"/>
+         <column autoUpdated="false" digits="0" id="3" name="atributo3" nullable="true" remarks="" size="5" type="int2"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="clasez_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+   </tables>
+</database>

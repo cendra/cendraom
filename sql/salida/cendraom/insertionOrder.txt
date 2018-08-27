@@ -1,3 +1,4 @@
 clazz
-clazzatt
-clazzextends
+clazzattribute
+clazzattributelabel
+clazzlabel
